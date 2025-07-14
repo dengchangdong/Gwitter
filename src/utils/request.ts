@@ -1,21 +1,9 @@
 import axios from 'axios';
 import config from '../config';
 
-// 判断当前环境是否为 Cloudflare Workers 环境
-const isCloudflareWorker = typeof window !== 'undefined' && 
-  window.location.hostname.includes('.workers.dev');
-
-// 确定API基础URL
-const getApiBaseUrl = () => {
-  if (isCloudflareWorker) {
-    return `${window.location.origin}/api/github/`;
-  }
-  return 'https://api.github.com/';
-};
-
 export const createAuthenticatedApi = (token: string) => {
   return axios.create({
-    baseURL: getApiBaseUrl(),
+    baseURL: 'https://api.github.com/',
     headers: {
       Accept: 'application/json',
       Authorization: `bearer ${token}`,
@@ -282,31 +270,13 @@ export const getUserInfo = async (token: string) => {
   return response.data;
 };
 
-// 修改 getAccessToken 函数以使用 Worker 代理
 export const getAccessToken = async (code: string) => {
-  try {
-    const url = isCloudflareWorker 
-      ? `${window.location.origin}/api/oauth/callback?code=${code}`
-      : config.request.autoProxy;
-      
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      },
-      body: JSON.stringify({
-        client_id: config.request.clientID,
-        client_secret: config.request.clientSecret,
-        code,
-      }),
-    });
-    
-    return response.json();
-  } catch (error) {
-    console.error('Error fetching access token:', error);
-    throw error;
-  }
+  const response = await axios.post(config.request.autoProxy, {
+    client_id: config.request.clientID,
+    client_secret: config.request.clientSecret,
+    code,
+  });
+  return response.data;
 };
 
 // Update comment

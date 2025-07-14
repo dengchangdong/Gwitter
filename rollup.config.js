@@ -28,27 +28,6 @@ const commonPlugins = [
   }),
 ];
 
-// Worker 构建配置
-const workerConfig = {
-  input: 'worker.js',
-  output: {
-    file: 'dist/worker.js',
-    format: 'es',
-  },
-  plugins: [
-    resolve({
-      browser: true,
-      preferBuiltins: false,
-    }),
-    commonjs(),
-    replace({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'),
-    }),
-    terser(),
-  ],
-};
-
-// Export configs
 export default [
   // UMD build
   {
@@ -145,5 +124,4 @@ export default [
       }),
     ],
   },
-  workerConfig,
 ];

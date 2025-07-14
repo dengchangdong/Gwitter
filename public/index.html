@@ -15,6 +15,24 @@
     <meta name="msapplication-navbutton-color" content="#f1f1f1" />
 
     <meta http-equiv="x-dns-prefetch-control" content="on" />
+    <!-- 环境变量注入 -->
+    <script>
+      window.__ENV__ = {
+        // 这些值将被Vercel的构建过程替换
+        GITHUB_TOKEN_PART1: '{{GITHUB_TOKEN_PART1}}',
+        GITHUB_TOKEN_PART2: '{{GITHUB_TOKEN_PART2}}',
+        GITHUB_CLIENT_ID: '{{GITHUB_CLIENT_ID}}',
+        GITHUB_CLIENT_SECRET: '{{GITHUB_CLIENT_SECRET}}',
+        GITHUB_OWNER: '{{GITHUB_OWNER}}',
+        GITHUB_REPO: '{{GITHUB_REPO}}',
+        AUTO_PROXY: '{{AUTO_PROXY}}',
+        ASSET_PREFIX: '{{ASSET_PREFIX}}',
+        ONLY_SHOW_OWNER: '{{ONLY_SHOW_OWNER}}',
+        ENABLE_REPO_SWITCHER: '{{ENABLE_REPO_SWITCHER}}',
+        ENABLE_ABOUT: '{{ENABLE_ABOUT}}',
+        ENABLE_EGG: '{{ENABLE_EGG}}'
+      };
+    </script>
     <style>
 			html {
 				scroll-behavior: smooth;
@@ -52,6 +70,7 @@
       }
     </style>
   </head>
+  <body>
     <div id=gwitter></div>
     <a class="github-corner" href="https://github.com/SimonAKing/Gwitter" aria-label="View source on GitHub" target="_blank" rel="noopener noreferrer" >
       <svg width="80" height="80" viewBox="0 0 250 250"
