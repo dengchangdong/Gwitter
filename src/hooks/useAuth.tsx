@@ -76,7 +76,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const query = {
       client_id: config.request.clientID,
       redirect_uri: window.location.href,
-      scope: 'public_repo',
+      scope: 'repo', // 修改为 'repo' 以获取访问私有仓库的权限
     };
     const loginLink = `${githubOauthUrl}?${queryStringify(query)}`;
     setIsLoading(true);
