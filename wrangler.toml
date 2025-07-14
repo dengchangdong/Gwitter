@@ -3,7 +3,7 @@ main = "worker.js"
 compatibility_date = "2023-10-30"
 
 [build]
-command = "pnpm install --no-frozen-lockfile && npm run build"
+command = "npm install && npm run build"
 [build.upload]
 format = "service-worker"
 
