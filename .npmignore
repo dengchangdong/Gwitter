@@ -1,0 +1,38 @@
+# Development files
+src/
+public/
+docs/
+.git/
+.github/
+node_modules/
+.rsbuild/
+
+# Config files
+rsbuild.config.mjs
+rollup.config.js
+tsconfig.json
+eslint.config.mjs
+.prettierrc
+.prettierignore
+.gitignore
+
+# Build scripts
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+
+# Test files
+test-lib.html
+**/*.test.*
+**/*.spec.*
+
+# Development tools
+.vscode/
+.idea/
+*.log
+*.tmp
+*.temp
+
+# OS files
+.DS_Store
+Thumbs.db
