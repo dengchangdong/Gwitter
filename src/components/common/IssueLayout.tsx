@@ -9,7 +9,7 @@ export const IssueContainer = styled.div`
 
 export const IssueContent = styled.div`
   flex: 1 1;
-  padding: 16px 20px 0px;
+  padding: 20px;
   margin: 6px;
   overflow: auto;
   background: hsla(0, 0%, 100%, 0.8);
