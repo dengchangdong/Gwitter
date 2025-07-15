@@ -13,7 +13,6 @@ export interface GwitterConfig {
   app?: {
     onlyShowOwner?: boolean;
     enableRepoSwitcher?: boolean;
-    enableAbout?: boolean;
     enableEgg?: boolean;
   };
 }
@@ -32,7 +31,6 @@ export const config: GwitterConfig = {
   },
   app: {
     onlyShowOwner: true,
-    enableAbout: true,
     enableRepoSwitcher: false,
     enableEgg: true,
   },

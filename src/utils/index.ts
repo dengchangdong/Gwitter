@@ -94,9 +94,6 @@ export interface RawIssue {
     totalCount: number;
     nodes: Reaction[];
   };
-  comments: {
-    totalCount: number;
-  };
   labels: {
     nodes: Label[];
   };
@@ -119,7 +116,6 @@ export interface ProcessedIssue {
     userReacted: boolean;
     heartCount: number;
   };
-  comments: number;
   label: Label;
 }
 
@@ -147,7 +143,6 @@ export const transformIssues = (
       url,
       author,
       reactions,
-      comments,
       labels,
     }) => {
       const heartReactions = reactions.nodes.filter(
@@ -171,7 +166,6 @@ export const transformIssues = (
           userReacted,
           heartCount,
         },
-        comments: comments.totalCount,
         label: transformLabel(labels.nodes),
       };
     },

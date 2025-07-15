@@ -74,10 +74,6 @@ function App() {
               <strong>Only Show Owner:</strong>{' '}
               {currentConfig.app?.onlyShowOwner ? 'Yes' : 'No'}
             </div>
-            <div className="config-item">
-              <strong>Enable About:</strong>{' '}
-              {currentConfig.app?.enableAbout ? 'Yes' : 'No'}
-            </div>
           </div>
         </div>
 

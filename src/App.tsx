@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 import { AnimatePresence } from 'framer-motion';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import About from './components/About';
 import AnimatedCard from './components/AnimatedCard';
 import Issue from './components/Issue';
 import SkeletonCard from './components/SkeletonCard';
@@ -368,9 +367,6 @@ const App = () => {
         isLoading={isRepoLoading}
         error={repoError}
       />
-      {config.app.enableAbout && (
-        <About owner={currentRepo.owner} repo={currentRepo.repo} />
-      )}
       {issues.length > 0 && (
         <>
           <IssuesContainer>
