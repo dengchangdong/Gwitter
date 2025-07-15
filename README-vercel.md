@@ -29,19 +29,24 @@
 
 在Vercel的项目设置中，添加以下环境变量：
 
+#### 必须配置的环境变量（无默认值）
+
 ```
+# GitHub 个人访问令牌
+GITHUB_TOKEN=your_github_token
+
 # GitHub OAuth应用配置
 GITHUB_CLIENT_ID=your_github_client_id
 GITHUB_CLIENT_SECRET=your_github_client_secret
 
-# GitHub个人访问令牌（为了安全分为两部分）
-GITHUB_TOKEN_PART1=your_token_part1
-GITHUB_TOKEN_PART2=your_token_part2
-
 # GitHub仓库配置
 GITHUB_OWNER=your_github_username
 GITHUB_REPO=your_repo_name
+```
 
+#### 可选配置的环境变量（有默认值）
+
+```
 # 应用配置
 PAGE_SIZE=6
 ONLY_SHOW_OWNER=false
@@ -53,7 +58,17 @@ ENABLE_EGG=false
 OAUTH_PROXY=https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token
 ```
 
-### 4. 更新GitHub OAuth应用设置
+### 4. GitHub Token 安全性说明
+
+为了确保 GitHub Token 的安全性：
+
+1. 在 Vercel 中配置 Token 时，请使用环境变量，而非直接在代码中硬编码
+2. 使用具有最小必要权限的 Token
+3. 定期轮换 Token
+4. 在 Vercel 项目设置中，将 Token 标记为"敏感"环境变量
+5. 如果暴露了 Token，请立即在 GitHub 中撤销并生成新的 Token
+
+### 5. 更新GitHub OAuth应用设置
 
 在GitHub中，更新您的OAuth应用设置：
 
@@ -62,7 +77,7 @@ OAUTH_PROXY=https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth
 3. 将"Authorization callback URL"设置为您的Vercel部署URL
    - 例如：`https://your-gwitter-app.vercel.app`
 
-### 5. 部署应用
+### 6. 部署应用
 
 点击"Deploy"按钮部署您的应用。
 
