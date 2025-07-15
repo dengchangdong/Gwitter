@@ -13,10 +13,6 @@ export const createAuthenticatedApi = (token: string) => {
 
 export const api = createAuthenticatedApi(config.request.token.join(''));
 
-// 只显示令牌的前几个和后几个字符
-const token = config.request.token.join('');
-console.log(`Token: ${token.substring(0, 6)}...${token.substring(token.length - 4)}`);
-
 interface GetIssuesQLParams {
   owner: string;
   repo: string;

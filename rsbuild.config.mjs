@@ -55,7 +55,9 @@ export default defineConfig({
     ],
   },
   output: {
-    // 删除硬编码的URL前缀，使用相对路径或环境变量
-    assetPrefix: process.env.ASSET_PREFIX || '',
+    // 根据环境变量确定资源前缀
+    assetPrefix: process.env.VERCEL_URL 
+      ? `https://${process.env.VERCEL_URL}/` 
+      : process.env.ASSET_PREFIX || '/',
   },
 });
