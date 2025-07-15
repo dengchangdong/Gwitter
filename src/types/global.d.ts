@@ -10,9 +10,7 @@ export interface GwitterConfig {
   };
   app?: {
     onlyShowOwner?: boolean;
-    enableRepoSwitcher?: boolean;
     enableAbout?: boolean;
-    enableEgg?: boolean;
   };
 }
 

@@ -2,7 +2,6 @@ import styled from '@emotion/styled';
 import 'github-markdown-css/github-markdown.css';
 import { useTranslation } from 'react-i18next';
 import { formatDate, ProcessedIssue, processLinksInHTML } from '../utils';
-import Interaction from './Interaction';
 import Label from './Label';
 import {
   IssueBody,
@@ -173,16 +172,6 @@ const Issue = ({
           dangerouslySetInnerHTML={{
             __html: processLinksInHTML(issue.bodyHTML),
           }}
-        />
-        <Interaction
-          id={issue.number}
-          issueId={issue.id}
-          reactions={issue.reactions}
-          comments={{
-            totalCount: issue.comments,
-          }}
-          repoOwner={repoOwner}
-          repoName={repoName}
         />
       </IssueContent>
     </IssueContainer>

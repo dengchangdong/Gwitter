@@ -45,12 +45,7 @@ GITHUB_REPO=your_repo_name
 # 应用配置
 PAGE_SIZE=6
 ONLY_SHOW_OWNER=false
-ENABLE_REPO_SWITCHER=true
 ENABLE_ABOUT=false
-ENABLE_EGG=false
-
-# CORS代理
-OAUTH_PROXY=https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token
 ```
 
 ### 4. 更新GitHub OAuth应用设置
@@ -83,6 +78,14 @@ OAUTH_PROXY=https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth
 1. 检查GitHub令牌是否有效
 2. 确保仓库名称和用户名配置正确
 3. 确认仓库中存在公开的Issues
+
+## 功能说明
+
+此版本的Gwitter已删除以下功能：
+- 点赞（GitHub Reactions）功能
+- 评论系统（评论、回复、编辑、删除）
+- 切换GitHub仓库功能
+- 彩蛋功能
 
 ## 维护更新
 

@@ -3,7 +3,6 @@ import { AnimatePresence } from 'framer-motion';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import About from './components/About';
 import AnimatedCard from './components/AnimatedCard';
-import Egg from './components/Egg';
 import Issue from './components/Issue';
 import SkeletonCard from './components/SkeletonCard';
 import Toolbar from './components/Toolbar';
@@ -11,12 +10,9 @@ import config from './config';
 
 import { AuthProvider, useAuth } from './hooks/useAuth';
 import {
-  getRepoFromUrl,
   ProcessedIssue,
   transformIssues,
-  updateUrlParams,
 } from './utils';
-import { loadLastRepo, saveLastRepo } from './utils/cache';
 import { api, getIssuesQL } from './utils/request';
 
 const Container = styled.div`
@@ -73,22 +69,9 @@ const App = () => {
   const [rawIssuesData, setRawIssuesData] = useState<any[]>([]);
   const [isInitialized, setIsInitialized] = useState(false);
   const [currentRepo, setCurrentRepo] = useState(() => {
-    if (config.app.enableRepoSwitcher) {
-      const urlRepo = getRepoFromUrl();
-      if (urlRepo) {
-        return urlRepo;
-      }
-
-      const lastRepo = loadLastRepo();
-      if (lastRepo) {
-        return lastRepo;
-      }
-    }
-
     if (config.request.owner && config.request.repo) {
       return { owner: config.request.owner, repo: config.request.repo };
     }
-
     return { owner: '', repo: '' };
   });
   const [repoError, setRepoError] = useState<string | null>(null);
@@ -227,10 +210,6 @@ const App = () => {
   const handleRepoChange = useCallback((owner: string, repo: string) => {
     console.log('Repo changed to:', { owner, repo });
     setCurrentRepo({ owner, repo });
-    if (config.app.enableRepoSwitcher) {
-      saveLastRepo(owner, repo);
-      updateUrlParams(owner, repo);
-    }
   }, []);
 
   const handleScroll = useCallback(() => {
@@ -322,14 +301,6 @@ const App = () => {
       setIsRepoLoading(true);
       resetAndLoadNewRepo();
       setIsInitialized(true);
-
-      if (
-        currentRepo.owner &&
-        currentRepo.repo &&
-        config.app.enableRepoSwitcher
-      ) {
-        updateUrlParams(currentRepo.owner, currentRepo.repo);
-      }
     }
   }, [isInitialized, resetAndLoadNewRepo, currentRepo]);
 
@@ -433,7 +404,6 @@ const App = () => {
           </ErrorContainer>
         </IssuesContainer>
       )}
-      {config.app.enableEgg && !hasNextPage && !repoError && <Egg />}
     </Container>
   );
 };

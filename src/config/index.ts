@@ -11,6 +11,11 @@ const getEnvVar = (key: string, defaultValue: string): string => {
   return defaultValue;
 };
 
+// 解析字符串为布尔值
+const parseBoolean = (value: string): boolean => {
+  return value.toLowerCase() === 'true';
+};
+
 let config = {
   request: {
     token: [
@@ -29,10 +34,8 @@ let config = {
   },
 
   app: {
-    onlyShowOwner: getEnvVar('ONLY_SHOW_OWNER', 'false'),
-    enableRepoSwitcher: getEnvVar('ENABLE_REPO_SWITCHER', 'true'),
-    enableAbout: getEnvVar('ENABLE_ABOUT', 'false'),
-    enableEgg: getEnvVar('ENABLE_EGG', 'false'),
+    onlyShowOwner: parseBoolean(getEnvVar('ONLY_SHOW_OWNER', 'false')),
+    enableAbout: parseBoolean(getEnvVar('ENABLE_ABOUT', 'false')),
   },
 };
 
