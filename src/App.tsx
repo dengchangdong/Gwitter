@@ -357,6 +357,9 @@ const App = () => {
     };
   }, []);
 
+  // 骨架屏加载状态 - 只有在加载时才显示
+  const showLoadingPlaceholder = isLoading || isRepoLoading;
+
   return (
     <Container>
       <Toolbar
@@ -389,7 +392,7 @@ const App = () => {
           </IssuesContainer>
         </>
       )}
-      <LoadingPlaceholder visible={true}>
+      <LoadingPlaceholder visible={showLoadingPlaceholder}>
         <SkeletonCard />
         <SkeletonCard />
       </LoadingPlaceholder>
