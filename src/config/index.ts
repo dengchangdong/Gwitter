@@ -21,14 +21,14 @@ const envConfig = getEnvConfig();
 
 let config = {
   request: {
-    token: envConfig.token || ['9c48ed2297d7d9bf9447', '6de723dbf1a6e4adeacd'],
-    clientID: envConfig.clientID || '56af6ab05592f0a2d399',
-    clientSecret: envConfig.clientSecret || '5d7e71a1b6130001e84956420ca5b88bc45b7d3c',
+    token: envConfig.token || ['ghp_21hwOey4nqFaHar', 'pTNYgw4C12HrL8T1P6gRE'],
+    clientID: envConfig.clientID || 'Ov23liZ8fUlrF8cFjn6y',
+    clientSecret: envConfig.clientSecret || 'd1b3980ee38c3152628a37687b2ae8b81633e49b',
     pageSize: 6,
     autoProxy: envConfig.autoProxy || 
       'https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token',
-    owner: envConfig.owner || 'SimonAKing',
-    repo: envConfig.repo || 'weibo',
+    owner: envConfig.owner || 'dengchangdong',
+    repo: envConfig.repo || 'IssuesMemos',
   },
 
   app: {
