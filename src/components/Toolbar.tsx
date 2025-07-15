@@ -1,6 +1,7 @@
 import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useTranslation } from 'react-i18next';
+import config from '../config';
 import { useAuth } from '../hooks/useAuth';
 import LanguageSwitcher from './LanguageSwitcher';
 
@@ -155,7 +156,7 @@ const Toolbar = ({
 
   return (
     <ToolbarContainer>
-      <Logo>Gwitter</Logo>
+      <Logo>{config.app.siteName}</Logo>
 
       <RightSection>
         <LanguageSwitcher />

@@ -11,6 +11,7 @@ export interface GwitterConfig {
   app?: {
     onlyShowOwner?: boolean;
     enableAbout?: boolean;
+    siteName?: string;
   };
 }
 

@@ -94,12 +94,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     };
     const loginLink = `${githubOauthUrl}?${queryStringify(query)}`;
     setIsLoading(true);
+    
     windowOpen(loginLink)
       .then((token: unknown) => {
         handleAuthCallback(token as string);
       })
       .catch((error) => {
-        console.error('Login error:', error);
+        // 如果用户关闭窗口，不显示错误，只是重置加载状态
+        if (error && error.message === 'Window closed by user') {
+          console.log('Login window closed by user');
+        } else {
+          console.error('Login error:', error);
+        }
         setIsLoading(false);
       });
   };

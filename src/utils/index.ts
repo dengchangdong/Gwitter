@@ -295,22 +295,24 @@ export const windowOpen = (_url: string) => {
     resolve(accessToken);
   };
 
-    return new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
+    // 检查窗口是否已经打开
+    if (!authWindow) {
+      reject(new Error('Failed to open authentication window'));
+      return;
+    }
+
     const checkWindowClosed = () => {
       if (authWindow && authWindow.closed) {
         clearInterval(windowCheckInterval);
-        reject('Window closed by user');
+        // 不再将窗口关闭视为错误，而是静默处理
+        reject(new Error('Window closed by user'));
       }
     };
 
     const windowCheckInterval = setInterval(checkWindowClosed, 500);
 
     eventer(messageEvent, (e: any) => handleMessage(e, resolve, reject, windowCheckInterval), false);
-
-    if (!authWindow) {
-      clearInterval(windowCheckInterval);
-      reject('Failed to open authentication window');
-    }
   });
 };
 

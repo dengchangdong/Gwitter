@@ -46,6 +46,7 @@ GITHUB_REPO=your_repo_name
 PAGE_SIZE=6
 ONLY_SHOW_OWNER=false
 ENABLE_ABOUT=false
+SITE_NAME=你的网站名称
 ```
 
 ### 4. 更新GitHub OAuth应用设置
@@ -86,6 +87,9 @@ ENABLE_ABOUT=false
 - 评论系统（评论、回复、编辑、删除）
 - 切换GitHub仓库功能
 - 彩蛋功能
+
+新增功能：
+- 可配置网站名称（通过SITE_NAME环境变量）
 
 ## 维护更新
 

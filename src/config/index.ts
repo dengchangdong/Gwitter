@@ -36,6 +36,7 @@ let config = {
   app: {
     onlyShowOwner: parseBoolean(getEnvVar('ONLY_SHOW_OWNER', 'false')),
     enableAbout: parseBoolean(getEnvVar('ENABLE_ABOUT', 'false')),
+    siteName: getEnvVar('SITE_NAME', 'Gwitter'),
   },
 };
 
