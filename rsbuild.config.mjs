@@ -55,9 +55,7 @@ export default defineConfig({
     ],
   },
   output: {
-    // 根据环境变量确定资源前缀
-    assetPrefix: process.env.VERCEL_URL 
-      ? `https://${process.env.VERCEL_URL}/` 
-      : process.env.ASSET_PREFIX || '/',
+    // 使用相对路径
+    publicPath: './',
   },
 });
