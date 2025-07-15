@@ -70,12 +70,26 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  // 获取当前域名的根URL，用于OAuth重定向
+  const getBaseUrl = () => {
+    // 在浏览器环境中
+    if (typeof window !== 'undefined') {
+      const { protocol, host, pathname } = window.location;
+      // 移除可能的路径，只保留域名部分
+      const basePath = pathname.split('/').slice(0, -1).join('/');
+      return `${protocol}//${host}${basePath}`;
+    }
+    // 默认返回空字符串（在服务器端渲染时）
+    return '';
+  };
+
   // open window，点击授权，重定向到 auth window，请求 proxy 获取token
   const login = () => {
     const githubOauthUrl = 'https://github.com/login/oauth/authorize';
+    const baseUrl = getBaseUrl();
     const query = {
       client_id: config.request.clientID,
-      redirect_uri: window.location.href,
+      redirect_uri: baseUrl ? `${baseUrl}/` : window.location.href,
       scope: 'public_repo',
     };
     const loginLink = `${githubOauthUrl}?${queryStringify(query)}`;

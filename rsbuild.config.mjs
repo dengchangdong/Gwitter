@@ -55,7 +55,7 @@ export default defineConfig({
     ],
   },
   output: {
-    // 使用相对路径
-    publicPath: './',
+    // 移除硬编码的assetPrefix，使用相对路径
+    publicPath: '/'
   },
 });

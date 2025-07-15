@@ -1,41 +1,38 @@
 import { GwitterConfig } from '../types/global';
 
-// 从环境变量中获取配置，如果存在的话
-const getEnvConfig = () => {
-  // 尝试从环境变量中获取token
-  const token = process.env.GITHUB_TOKEN || process.env.NEXT_PUBLIC_GITHUB_TOKEN;
-  const tokenParts = token ? [token.slice(0, token.length / 2), token.slice(token.length / 2)] : undefined;
-
-  return {
-    token: tokenParts,
-    clientID: process.env.GITHUB_CLIENT_ID || process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID,
-    clientSecret: process.env.GITHUB_CLIENT_SECRET || process.env.NEXT_PUBLIC_GITHUB_CLIENT_SECRET,
-    owner: process.env.GITHUB_OWNER || process.env.NEXT_PUBLIC_GITHUB_OWNER,
-    repo: process.env.GITHUB_REPO || process.env.NEXT_PUBLIC_GITHUB_REPO,
-    autoProxy: process.env.CORS_PROXY || process.env.NEXT_PUBLIC_CORS_PROXY,
-  };
+// 从环境变量或默认值获取配置
+const getEnvVar = (key: string, defaultValue: string): string => {
+  if (typeof window !== 'undefined' && (window as any).__ENV__ && (window as any).__ENV__[key]) {
+    return (window as any).__ENV__[key];
+  }
+  if (typeof process !== 'undefined' && process.env && process.env[key]) {
+    return process.env[key] || defaultValue;
+  }
+  return defaultValue;
 };
-
-// 环境变量配置
-const envConfig = getEnvConfig();
 
 let config = {
   request: {
-    token: envConfig.token || ['ghp_21hwOey4nqFaHar', 'pTNYgw4C12HrL8T1P6gRE'],
-    clientID: envConfig.clientID || 'Ov23liZ8fUlrF8cFjn6y',
-    clientSecret: envConfig.clientSecret || 'd1b3980ee38c3152628a37687b2ae8b81633e49b',
-    pageSize: 6,
-    autoProxy: envConfig.autoProxy || 
-      'https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token',
-    owner: envConfig.owner || 'dengchangdong',
-    repo: envConfig.repo || 'IssuesMemos',
+    token: [
+      getEnvVar('GITHUB_TOKEN_PART1', '9c48ed2297d7d9bf9447'), 
+      getEnvVar('GITHUB_TOKEN_PART2', '6de723dbf1a6e4adeacd')
+    ],
+    clientID: getEnvVar('GITHUB_CLIENT_ID', '56af6ab05592f0a2d399'),
+    clientSecret: getEnvVar('GITHUB_CLIENT_SECRET', '5d7e71a1b6130001e84956420ca5b88bc45b7d3c'),
+    pageSize: Number(getEnvVar('PAGE_SIZE', '6')),
+    autoProxy: getEnvVar(
+      'OAUTH_PROXY',
+      'https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token'
+    ),
+    owner: getEnvVar('GITHUB_OWNER', 'SimonAKing'),
+    repo: getEnvVar('GITHUB_REPO', 'weibo'),
   },
 
   app: {
-    onlyShowOwner: false,
-    enableRepoSwitcher: true,
-    enableAbout: false,
-    enableEgg: false,
+    onlyShowOwner: getEnvVar('ONLY_SHOW_OWNER', 'false') === 'true',
+    enableRepoSwitcher: getEnvVar('ENABLE_REPO_SWITCHER', 'true') === 'true',
+    enableAbout: getEnvVar('ENABLE_ABOUT', 'false') === 'true',
+    enableEgg: getEnvVar('ENABLE_EGG', 'false') === 'true',
   },
 };
 

@@ -34,8 +34,7 @@
     "lint": "eslint .",
     "preview": "rsbuild preview",
     "prepublishOnly": "pnpm run build:lib",
-    "publish:npm": "npm publish",
-    "start": "npx serve dist -l 3000"
+    "publish:npm": "npm publish"
   },
   "dependencies": {
     "@emotion/react": "^11.11.3",
