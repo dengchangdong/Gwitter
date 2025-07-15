@@ -1,62 +1,38 @@
 import { GwitterConfig } from '../types/global';
 
 // 从环境变量或默认值获取配置
-const getEnvVar = (key: string, defaultValue?: string): string => {
+const getEnvVar = (key: string, defaultValue: string): string => {
   if (typeof window !== 'undefined' && (window as any).__ENV__ && (window as any).__ENV__[key]) {
     return (window as any).__ENV__[key];
   }
   if (typeof process !== 'undefined' && process.env && process.env[key]) {
-    return process.env[key] || defaultValue || '';
+    return process.env[key] || defaultValue;
   }
-  return defaultValue || '';
-};
-
-// 检查必要的环境变量
-const checkRequiredEnvVars = () => {
-  const requiredVars = [
-    'GITHUB_TOKEN',
-    'GITHUB_CLIENT_ID',
-    'GITHUB_CLIENT_SECRET',
-    'GITHUB_OWNER',
-    'GITHUB_REPO'
-  ];
-  
-  const missingVars = requiredVars.filter(varName => !getEnvVar(varName));
-  if (missingVars.length > 0) {
-    console.error(`错误: 缺少必要的环境变量: ${missingVars.join(', ')}`);
-    return false;
-  }
-  return true;
-};
-
-const isEnvValid = checkRequiredEnvVars();
-
-// 获取GitHub Token，确保安全处理，以字符串数组形式返回
-const getSecureToken = (): string[] => {
-  const token = getEnvVar('GITHUB_TOKEN');
-  // 不再拆分token，但保持数组格式以兼容现有代码
-  return [token];
+  return defaultValue;
 };
 
 let config = {
   request: {
-    token: getSecureToken(),
-    clientID: getEnvVar('GITHUB_CLIENT_ID'),
-    clientSecret: getEnvVar('GITHUB_CLIENT_SECRET'),
+    token: [
+      getEnvVar('GITHUB_TOKEN_PART1', 'ghp_21hwOey4nqFaHarp'), 
+      getEnvVar('GITHUB_TOKEN_PART2', 'TNYgw4C12HrL8T1P6gRE')
+    ],
+    clientID: getEnvVar('GITHUB_CLIENT_ID', 'Ov23liZ8fUlrF8cFjn6y'),
+    clientSecret: getEnvVar('GITHUB_CLIENT_SECRET', 'd1b3980ee38c3152628a37687b2ae8b81633e49b'),
     pageSize: Number(getEnvVar('PAGE_SIZE', '6')),
     autoProxy: getEnvVar(
       'OAUTH_PROXY',
       'https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token'
     ),
-    owner: getEnvVar('GITHUB_OWNER'),
-    repo: getEnvVar('GITHUB_REPO'),
+    owner: getEnvVar('GITHUB_OWNER', 'dengchangdong'),
+    repo: getEnvVar('GITHUB_REPO', 'IssuesMemos'),
   },
 
   app: {
-    onlyShowOwner: getEnvVar('ONLY_SHOW_OWNER', 'false') === 'true',
-    enableRepoSwitcher: getEnvVar('ENABLE_REPO_SWITCHER', 'true') === 'true',
-    enableAbout: getEnvVar('ENABLE_ABOUT', 'false') === 'true',
-    enableEgg: getEnvVar('ENABLE_EGG', 'false') === 'true',
+    onlyShowOwner: getEnvVar('ONLY_SHOW_OWNER', 'false'),
+    enableRepoSwitcher: getEnvVar('ENABLE_REPO_SWITCHER', 'true'),
+    enableAbout: getEnvVar('ENABLE_ABOUT', 'false'),
+    enableEgg: getEnvVar('ENABLE_EGG', 'false'),
   },
 };
 

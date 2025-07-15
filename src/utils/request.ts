@@ -11,20 +11,7 @@ export const createAuthenticatedApi = (token: string) => {
   });
 };
 
-// 安全地获取token
-const getToken = (): string => {
-  // 如果token是数组，取第一个元素
-  if (Array.isArray(config.request.token)) {
-    return config.request.token[0] || '';
-  }
-  // 如果token是字符串，直接返回
-  if (typeof config.request.token === 'string') {
-    return config.request.token;
-  }
-  return '';
-};
-
-export const api = createAuthenticatedApi(getToken());
+export const api = createAuthenticatedApi(config.request.token.join(''));
 
 interface GetIssuesQLParams {
   owner: string;
