@@ -27,7 +27,7 @@ let config = {
     pageSize: Number(getEnvVar('PAGE_SIZE', '6')),
     autoProxy: getEnvVar(
       'OAUTH_PROXY',
-      'https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token'
+      '/api/github-oauth'
     ),
     owner: getEnvVar('GITHUB_OWNER', 'dengchangdong'),
     repo: getEnvVar('GITHUB_REPO', 'IssuesMemos'),
