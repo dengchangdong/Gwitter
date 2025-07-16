@@ -205,6 +205,10 @@ gwitter({
 
       // CORS proxy (optional)
       autoProxy: 'https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token',
+      
+      // GitHub API proxy configuration (optional)
+      enableGithubApiProxy: false, // set to true to enable proxy
+      githubApiProxyUrl: '/api/github-proxy', // path to proxy API endpoint
     },
     app: {
       // Application feature toggles
@@ -251,6 +255,10 @@ For direct browser usage without build tools:
 
         // CORS proxy (optional)
         autoProxy: 'https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token',
+        
+        // GitHub API proxy configuration (optional)
+        enableGithubApiProxy: false, // set to true to enable proxy
+        githubApiProxyUrl: '/api/github-proxy', // path to proxy API endpoint
       },
       app: {
         // Application feature toggles
@@ -328,6 +336,8 @@ Main function to initialize and render Gwitter.
 | `repo` | `string` | ✅ | GitHub repository name | `'your_repo_name'` |
 | `pageSize` | `number` | ❌ | Number of issues to load per page (default: 6) | `6` |
 | `autoProxy` | `string` | ❌ | CORS proxy URL for OAuth requests | `'https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token'` |
+| `enableGithubApiProxy` | `boolean` | ❌ | Whether to enable GitHub API proxy (default: false) | `false` |
+| `githubApiProxyUrl` | `string` | ❌ | URL of the GitHub API proxy service (default: '/api/github-proxy') | `'/api/github-proxy'` |
 
 **options.config.app** (Object) - **Optional**
 - Application behavior configuration

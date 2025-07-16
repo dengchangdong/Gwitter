@@ -7,6 +7,8 @@ export interface GwitterConfig {
     autoProxy?: string;
     owner?: string;
     repo?: string;
+    enableGithubApiProxy?: boolean;
+    githubApiProxyUrl?: string;
   };
   app?: {
     onlyShowOwner?: boolean;

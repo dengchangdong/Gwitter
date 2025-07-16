@@ -2,8 +2,12 @@ import axios from 'axios';
 import config from '../config';
 
 export const createAuthenticatedApi = (token: string) => {
+  const baseURL = config.request.enableGithubApiProxy
+    ? config.request.githubApiProxyUrl
+    : 'https://api.github.com/';
+
   return axios.create({
-    baseURL: 'https://api.github.com/',
+    baseURL,
     headers: {
       Accept: 'application/json',
       Authorization: `bearer ${token}`,
@@ -181,7 +185,11 @@ export const removeReactionFromIssue = async (
 };
 
 export const getUserInfo = async (token: string) => {
-  const response = await axios.get('https://api.github.com/user', {
+  const baseURL = config.request.enableGithubApiProxy
+    ? config.request.githubApiProxyUrl
+    : 'https://api.github.com';
+    
+  const response = await axios.get(`${baseURL}/user`, {
     headers: {
       Authorization: `bearer ${token}`,
     },

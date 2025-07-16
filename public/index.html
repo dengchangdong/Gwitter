@@ -10,22 +10,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="renderer" content="webkit" />
 
-    <!-- 添加关键资源预加载 -->
-    <link rel="preconnect" href="https://api.github.com" crossorigin />
-    <link rel="dns-prefetch" href="https://api.github.com" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-    
-    <!-- 预加载关键脚本文件 -->
-    <link rel="preload" as="script" href="%PUBLIC_URL%/static/js/main.js" crossorigin />
-    <link rel="preload" as="style" href="%PUBLIC_URL%/static/css/main.css" />
-
     <meta name="theme-color" content="#f1f1f1" />
     <meta name="apple-mobile-web-app-status-bar-style" content="#f1f1f1" />
     <meta name="msapplication-navbutton-color" content="#f1f1f1" />
 
     <meta http-equiv="x-dns-prefetch-control" content="on" />
-    <!-- 内联关键CSS样式以减少渲染阻塞 -->
     <style>
 			html {
 				scroll-behavior: smooth;
@@ -61,162 +50,9 @@
           display: none;
         }
       }
-      
-      /* 加载动画样式 */
-      #loading-spinner {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        width: 100%;
-        position: fixed;
-        top: 0;
-        left: 0;
-        background-color: #f1f1f1;
-        z-index: 9999;
-        transition: opacity 0.5s ease, visibility 0.5s ease;
-      }
-      
-      .spinner {
-        width: 50px;
-        height: 50px;
-        border: 4px solid rgba(0, 0, 0, 0.1);
-        border-radius: 50%;
-        border-left-color: #3498db;
-        animation: spin 1s linear infinite;
-      }
-      
-      @keyframes spin {
-        0% {
-          transform: rotate(0deg);
-        }
-        100% {
-          transform: rotate(360deg);
-        }
-      }
-      
-      .hidden {
-        opacity: 0;
-        visibility: hidden;
-      }
-
-      /* 骨架屏样式 - 模拟内容占位 */
-      .skeleton-content {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        max-width: 720px;
-        margin: 0 auto;
-        padding: 16px;
-        animation: pulse 1.5s ease-in-out 0.5s infinite;
-      }
-
-      .skeleton-header {
-        height: 40px;
-        background-color: #e0e0e0;
-        margin-bottom: 20px;
-        border-radius: 4px;
-      }
-
-      .skeleton-body {
-        height: 100px;
-        background-color: #e0e0e0;
-        margin-bottom: 16px;
-        border-radius: 4px;
-      }
-
-      @keyframes pulse {
-        0% {
-          opacity: 1;
-        }
-        50% {
-          opacity: 0.5;
-        }
-        100% {
-          opacity: 1;
-        }
-      }
     </style>
   </head>
   <body>
-    <!-- 加载动画容器 -->
-    <div id="loading-spinner">
-      <div class="spinner"></div>
-      <!-- 添加骨架屏 -->
-      <div class="skeleton-content">
-        <div class="skeleton-header"></div>
-        <div class="skeleton-body"></div>
-        <div class="skeleton-body"></div>
-      </div>
-    </div>
-    
-    <div id="gwitter"></div>
-    
-    <script>
-      // 立即执行函数监测LCP
-      (function() {
-        // 性能监测
-        if ('PerformanceObserver' in window) {
-          let lcpObserver = new PerformanceObserver((entryList) => {
-            let entries = entryList.getEntries();
-            let lastEntry = entries[entries.length - 1];
-            console.log('LCP:', lastEntry.startTime / 1000, '秒');
-          });
-          
-          lcpObserver.observe({type: 'largest-contentful-paint', buffered: true});
-        }
-        
-        // 记录首次渲染时间
-        performance.mark('app-start');
-      })();
-
-      // 优先初始化加载状态
-      (function() {
-        // 当DOM准备好就立即显示加载动画，无需等待所有资源
-        const spinner = document.getElementById('loading-spinner');
-        if (spinner) {
-          spinner.style.display = 'flex';
-        }
-        
-        // 如果5秒后应用还未加载完成，强制隐藏加载动画
-        setTimeout(function() {
-          if (spinner && spinner.parentElement) {
-            spinner.classList.add('hidden');
-            setTimeout(function() {
-              if (spinner.parentElement) {
-                spinner.parentElement.removeChild(spinner);
-              }
-            }, 500);
-          }
-        }, 5000);
-      })();
-
-      // 预先准备DOM内容
-      document.addEventListener('DOMContentLoaded', function() {
-        const spinner = document.getElementById('loading-spinner');
-        if (spinner) {
-          // 确保加载动画立即显示
-          spinner.style.display = 'flex';
-        }
-      });
-
-      // 在React应用加载完成后隐藏加载动画
-      window.addEventListener('load', function() {
-        performance.mark('app-loaded');
-        performance.measure('app-load-time', 'app-start', 'app-loaded');
-        console.log('App加载总时间:', performance.getEntriesByName('app-load-time')[0].duration / 1000, '秒');
-        
-        // 不需要延迟，立即开始隐藏动画
-        const spinner = document.getElementById('loading-spinner');
-        if (spinner) {
-          spinner.classList.add('hidden');
-          setTimeout(function() {
-            if (spinner.parentElement) {
-              spinner.parentElement.removeChild(spinner);
-            }
-          }, 500);
-        }
-      });
-    </script>
+    <div id=gwitter></div>
   </body>
 </html>

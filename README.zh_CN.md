@@ -206,6 +206,10 @@ gwitter({
 
       // CORS 代理（可选）
       autoProxy: 'https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token',
+        
+      // GitHub API 代理配置（可选）
+      enableGithubApiProxy: false, // 设置为 true 启用代理
+      githubApiProxyUrl: '/api/github-proxy', // 代理 API 端点路径
     },
     app: {
       // 应用功能开关
@@ -252,6 +256,10 @@ gwitter({
 
         // CORS 代理（可选）
         autoProxy: 'https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token',
+        
+        // GitHub API 代理配置（可选）
+        enableGithubApiProxy: false, // 设置为 true 启用代理
+        githubApiProxyUrl: '/api/github-proxy', // 代理 API 端点路径
       },
       app: {
         // 应用功能开关
@@ -329,6 +337,8 @@ gwitter({
 | `repo` | `string` | ✅ | GitHub 仓库名称 | `'your_repo_name'` |
 | `pageSize` | `number` | ❌ | 每页加载的 issue 数量（默认：6） | `6` |
 | `autoProxy` | `string` | ❌ | OAuth 请求的 CORS 代理 URL | `'https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token'` |
+| `enableGithubApiProxy` | `boolean` | ❌ | 是否启用 GitHub API 代理（默认：false） | `false` |
+| `githubApiProxyUrl` | `string` | ❌ | GitHub API 代理服务的 URL（默认：'/api/github-proxy'） | `'/api/github-proxy'` |
 
 **options.config.app** (Object) - **可选**
 - 应用行为配置
@@ -338,44 +348,4 @@ gwitter({
 | `onlyShowOwner` | `boolean` | `false` | 只显示仓库所有者的 issues | `false` |
 | `enableRepoSwitcher` | `boolean` | `false` | 启用仓库切换功能 | `false` |
 | `enableAbout` | `boolean` | `false` | 显示关于页面/部分 | `false` |
-| `enableEgg` | `boolean` | `false` | 启用彩蛋功能 | `false` |
-
-**返回值：**
-- `Promise<void>` - 当 Gwitter 成功初始化时解决
-
-**示例：**
-```javascript
-gwitter({
-  container: '#comments',
-  config: {
-    request: {
-      token: ['ghp_xxxx', 'xxxx'],
-      clientID: 'your_client_id',
-      clientSecret: 'your_client_secret',
-      owner: 'your_username',
-      repo: 'your_repo_name',
-      pageSize: 10,
-    },
-    app: {
-      onlyShowOwner: true,
-      enableAbout: true,
-    }
-  }
-});
-```
-
-## 🤝 贡献
-
-欢迎提交 Issue 和 Pull Request！
-
----
-
-<div align="center">
-
-**感谢你的关注与支持！**
-
-如果你喜欢这个项目，别忘了点个 ⭐ 哦~
-
-Made with ❤️ by [SimonAKing](https://github.com/SimonAKing)
-
-</div>
+| `enableEgg` | `boolean` | `false` | 启用彩蛋功能 | `
