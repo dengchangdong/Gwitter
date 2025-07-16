@@ -68,30 +68,18 @@ export const Spotlight = ({
     };
   }, [parentElement, handleMouseMove]);
 
-  const spotlightStyle: React.CSSProperties = {
-    width: size,
-    height: size,
-    left: spotlightLeft.get(),
-    top: spotlightTop.get(),
-    position: 'absolute',
-    pointerEvents: 'none',
-    borderRadius: '9999px',
-    backgroundImage:
-      'radial-gradient(circle at center, rgba(255, 255, 255, 0.95), rgba(244, 244, 245, 0.8), rgba(228, 228, 231, 0.4), rgba(200, 200, 200, 0.1), transparent 70%)',
-    filter: 'blur(0.5em)',
-    // backgroundColor: 'rgba(244, 244, 245, 0.8)',
-    opacity: isHovered ? 0.9 : 0,
-    transition: 'opacity 0.15s ease-in-out',
-  };
-
   return (
     <motion.div
       ref={containerRef}
-      className={className}
+      className={`absolute pointer-events-none rounded-full blur-md transition-opacity duration-150 ease-in-out ${className || ''}`}
       style={{
-        ...spotlightStyle,
+        width: size,
+        height: size,
         left: spotlightLeft,
         top: spotlightTop,
+        backgroundImage:
+          'radial-gradient(circle at center, rgba(255, 255, 255, 0.95), rgba(244, 244, 245, 0.8), rgba(228, 228, 231, 0.4), rgba(200, 200, 200, 0.1), transparent 70%)',
+        opacity: isHovered ? 0.9 : 0,
       }}
     />
   );

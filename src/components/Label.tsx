@@ -1,4 +1,3 @@
-import styled from '@emotion/styled';
 import { getColorByBgColor } from '../utils';
 
 interface LabelProps {
@@ -7,23 +6,21 @@ interface LabelProps {
   style?: React.CSSProperties;
 }
 
-const LabelContainer = styled.span<{ bgColor: string }>`
-  display: inline-block;
-  line-height: 1;
-  padding: 5px 6px;
-  font-size: 0.9em;
-  font-weight: 600;
-  border-radius: 3px;
-  box-shadow: inset 0 -1px 0 rgba(27, 31, 35, 0.12);
-  background-color: #${(props) => props.bgColor};
-  color: ${(props) => getColorByBgColor(props.bgColor)};
-`;
-
 const Label: React.FC<LabelProps> = ({ name, color, style }) => {
+  // 动态生成基于颜色的内联样式
+  const textColor = getColorByBgColor(color);
+  
   return (
-    <LabelContainer style={style} bgColor={color}>
+    <span 
+      className="inline-block rounded px-1.5 py-1 text-xs font-semibold shadow-inner"
+      style={{
+        ...style,
+        backgroundColor: `#${color}`,
+        color: textColor,
+      }}
+    >
       {name}
-    </LabelContainer>
+    </span>
   );
 };
 

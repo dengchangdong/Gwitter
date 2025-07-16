@@ -1,102 +1,37 @@
-import styled from '@emotion/styled';
-import {
-  IssueBody,
-  IssueContent,
-  IssueFooter,
-  IssueHeader,
-} from './common/IssueLayout';
-
-const SkeletonBase = styled.div`
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-  background-size: 200px 100%;
-  animation: skeleton-loading 3s infinite;
-  border-radius: 4px;
-  margin-bottom: 8px;
-
-  @keyframes skeleton-loading {
-    0% {
-      background-position: -200px 0;
-    }
-    100% {
-      background-position: calc(200px + 100%) 0;
-    }
-  }
-`;
-
-const SkeletonAvatar = styled(SkeletonBase)`
-  width: 2em;
-  height: 2em;
-  border-radius: 50%;
-  margin-right: 0.5em;
-  margin-bottom: 0;
-  display: inline-flex;
-  align-self: center;
-`;
-
-const SkeletonUsername = styled(SkeletonBase)`
-  width: 120px;
-  height: 20px;
-  display: inline-flex;
-  align-self: center;
-  margin-bottom: 0;
-`;
-
-const SkeletonDate = styled(SkeletonBase)`
-  width: 80px;
-  height: 16px;
-  display: inline-flex;
-  align-self: center;
-  margin-bottom: 0;
-  margin-left: 20px;
-`;
-
-const SkeletonLabel = styled(SkeletonBase)`
-  width: 60px;
-  height: 24px;
-  position: absolute;
-  right: 0;
-  top: 0;
-`;
-
-const SkeletonLine = styled(SkeletonBase)<{ width: string }>`
-  height: 16px;
-  margin-top: 12px;
-  width: ${(props) => props.width};
-`;
-
-const SkeletonInteractions = styled(SkeletonBase)`
-  width: 100px;
-  height: 20px;
-  margin: 16px 0px;
-`;
-
-export const SkeletonContainer = styled.div`
-  position: relative;
-  margin-bottom: 0.5em;
-  display: flex;
-  border-radius: 10px;
-`;
-
-export const SkeletonCard = () => (
-  <SkeletonContainer>
-    <IssueContent>
-      <IssueHeader>
-        <SkeletonAvatar />
-        <SkeletonUsername />
-        <SkeletonDate />
-        <SkeletonLabel />
-      </IssueHeader>
-      <IssueBody>
-        <SkeletonLine width="95%" />
-        <SkeletonLine width="85%" />
-        <SkeletonLine width="75%" />
-        <SkeletonLine width="65%" />
-      </IssueBody>
-      <IssueFooter>
-        <SkeletonInteractions />
-      </IssueFooter>
-    </IssueContent>
-  </SkeletonContainer>
-);
+const SkeletonCard = () => {
+  // 骨架屏动画类
+  const skeletonClass = "bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 animate-pulse rounded";
+  
+  return (
+    <div className="relative mb-2 flex rounded-lg">
+      <div className="relative z-10 m-1.5 flex-1 overflow-hidden rounded-lg border border-gray-100 bg-white/80 p-5 shadow-sm">
+        {/* 头部 */}
+        <div className="relative mb-3 flex items-center">
+          {/* 头像 */}
+          <div className={`${skeletonClass} mr-2 h-8 w-8 rounded-full`}></div>
+          {/* 用户名 */}
+          <div className={`${skeletonClass} h-5 w-28`}></div>
+          {/* 日期 */}
+          <div className={`${skeletonClass} ml-5 h-4 w-20`}></div>
+          {/* 标签 */}
+          <div className={`${skeletonClass} absolute right-0 top-0 h-6 w-14`}></div>
+        </div>
+        
+        {/* 内容 */}
+        <div className="mb-4">
+          <div className={`${skeletonClass} mt-3 h-4 w-[95%]`}></div>
+          <div className={`${skeletonClass} mt-3 h-4 w-[85%]`}></div>
+          <div className={`${skeletonClass} mt-3 h-4 w-[75%]`}></div>
+          <div className={`${skeletonClass} mt-3 h-4 w-[65%]`}></div>
+        </div>
+        
+        {/* 底部 */}
+        <div className="relative mt-4">
+          <div className={`${skeletonClass} h-5 w-24`}></div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default SkeletonCard;

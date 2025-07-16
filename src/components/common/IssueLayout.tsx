@@ -1,69 +1,46 @@
-import styled from '@emotion/styled';
+import React from 'react';
 
-export const IssueContainer = styled.div`
-  position: relative;
-  margin: 0.5em 0;
-  display: flex;
-  border-radius: 10px;
-`;
+// 使用 Tailwind CSS 类名的 Issue 容器组件
+export const IssueContainer: React.FC<React.PropsWithChildren> = ({ children }) => {
+  return (
+    <div className="relative my-2 flex rounded-lg">
+      {children}
+    </div>
+  );
+};
 
-export const IssueContent = styled.div`
-  flex: 1 1;
-  padding: 20px;
-  margin: 6px;
-  overflow: auto;
-  background: hsla(0, 0%, 100%, 0.8);
-  border: 0.5px solid #f1f1f1;
-  border-radius: 10px;
-  box-shadow: 0 0.1em 0.2em 0 rgba(234, 234, 234, 0.8);
-  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-  position: relative;
-  overflow: hidden;
-  font-size: 15px;
-  z-index: 2;
+// 使用 Tailwind CSS 类名的 Issue 内容组件
+export const IssueContent: React.FC<React.PropsWithChildren> = ({ children }) => {
+  return (
+    <div className="relative z-10 m-1.5 flex-1 overflow-hidden rounded-lg border border-gray-100 bg-white/80 p-5 text-sm shadow-sm transition-all duration-300 ease-out">
+      {children}
+    </div>
+  );
+};
 
-  /* border: 1px solid rgb(212, 212, 216); */
-  /* box-shadow:
-    rgba(0, 0, 0, 0) 0px 0px 0px 0px,
-    rgba(0, 0, 0, 0) 0px 0px 0px 0px,
-    rgba(0, 0, 0, 0.15) 2px 0px 8px 0px; */
+// 使用 Tailwind CSS 类名的 Issue 头部组件
+export const IssueHeader: React.FC<React.PropsWithChildren> = ({ children }) => {
+  return (
+    <div className="relative mb-3 flex flex-wrap items-center">
+      {children}
+    </div>
+  );
+};
 
-  /* &:hover { */
-  /* box-shadow: 0 0.2em 0.3em 0.1em rgba(200, 200, 200, 0.4); */
-  /* transform: translateY(-1px); */
-  /* } */
-`;
+// 使用 Tailwind CSS 类名的 Issue 正文组件
+export const IssueBody: React.FC<React.PropsWithChildren<{className?: string}>> = ({ children, className = '' }) => {
+  return (
+    <div className={`text-gray-800 ${className}`}>
+      {children}
+    </div>
+  );
+};
 
-export const IssueHeader = styled.div`
-  margin-bottom: 0.7em;
-  font-size: 1em;
-  position: relative;
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  /* gap: 0.2em; */
-`;
-
-export const IssueBody = styled.div`
-  color: #333;
-  &.markdown-body {
-    font-size: 1em;
-    letter-spacing: 0.2px;
-    word-wrap: break-word;
-    background-color: transparent;
-    /* background: hsla(0, 0%, 100%, 0.8); */
-    ol {
-      list-style: decimal !important;
-    }
-    ul {
-      list-style: circle !important;
-    }
-  }
-`;
-
-export const IssueFooter = styled.div`
-  position: relative;
-  margin-top: 0.8em;
-  font-size: 1em;
-  user-select: none;
-`;
+// 使用 Tailwind CSS 类名的 Issue 底部组件
+export const IssueFooter: React.FC<React.PropsWithChildren> = ({ children }) => {
+  return (
+    <div className="relative mt-3 select-none text-base">
+      {children}
+    </div>
+  );
+};
