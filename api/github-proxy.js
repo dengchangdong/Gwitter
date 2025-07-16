@@ -21,25 +21,10 @@ export default async function handler(req, res) {
 
   try {
     // 获取请求路径（去掉/api/github-proxy前缀）
-    const path = req.url.replace(/^\/api\/github-proxy/, '');
+    const githubPath = req.url.replace(/^\/api\/github-proxy/, '');
     
-    // 判断是否为githubusercontent.com的请求
-    let baseUrl = 'https://api.github.com';
-    let requestPath = path;
-    
-    // 检查请求是否包含raw.githubusercontent.com路径标识
-    if (path.startsWith('/raw')) {
-      // 移除 /raw 前缀，准备代理到 raw.githubusercontent.com
-      requestPath = path.substring(4);
-      baseUrl = 'https://raw.githubusercontent.com';
-    } else if (path.startsWith('/user-content')) {
-      // 移除 /user-content 前缀，准备代理到 user-images.githubusercontent.com
-      requestPath = path.substring(13);
-      baseUrl = 'https://user-images.githubusercontent.com';
-    }
-    
-    // 构建GitHub请求URL
-    const githubUrl = `${baseUrl}${requestPath}`;
+    // 构建GitHub API请求URL
+    const githubUrl = `https://api.github.com${githubPath}`;
     
     // 获取所有请求头
     const headers = { ...req.headers };
@@ -54,7 +39,7 @@ export default async function handler(req, res) {
     delete headers.connection;
     
     // 设置GitHub API所需的请求头
-    if (!headers.accept && baseUrl === 'https://api.github.com') {
+    if (!headers.accept) {
       headers.accept = 'application/vnd.github.v3+json';
     }
 
@@ -70,22 +55,22 @@ export default async function handler(req, res) {
       requestOptions.data = req.body;
     }
 
-    // 发送请求到GitHub
+    // 发送请求到GitHub API
     const response = await axios({
       url: githubUrl,
       ...requestOptions,
     });
 
-    // 转发GitHub的响应头
+    // 转发GitHub API的响应头
     Object.entries(response.headers).forEach(([key, value]) => {
       res.setHeader(key, value);
     });
 
-    // 返回GitHub的响应状态和内容
+    // 返回GitHub API的响应状态和内容
     res.status(response.status);
     response.data.pipe(res);
   } catch (error) {
-    console.error('GitHub代理错误:', error);
+    console.error('GitHub API代理错误:', error);
     
     // 如果错误响应包含状态码和数据，则转发这些信息
     if (error.response) {

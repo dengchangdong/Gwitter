@@ -205,10 +205,10 @@ gwitter({
       pageSize: 6,
 
       // CORS 代理（可选）
-      autoProxy: '/api/github-oauth',
-      
+      autoProxy: 'https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token',
+        
       // GitHub API 代理配置（可选）
-      enableGithubApiProxy: true, // 设置为 true 启用代理
+      enableGithubApiProxy: false, // 设置为 true 启用代理
       githubApiProxyUrl: '/api/github-proxy', // 代理 API 端点路径
     },
     app: {
@@ -255,10 +255,10 @@ gwitter({
         pageSize: 6,
 
         // CORS 代理（可选）
-        autoProxy: '/api/github-oauth',
+        autoProxy: 'https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token',
         
         // GitHub API 代理配置（可选）
-        enableGithubApiProxy: true, // 设置为 true 启用代理
+        enableGithubApiProxy: false, // 设置为 true 启用代理
         githubApiProxyUrl: '/api/github-proxy', // 代理 API 端点路径
       },
       app: {
@@ -336,8 +336,8 @@ gwitter({
 | `owner` | `string` | ✅ | GitHub 仓库所有者（用户名） | `'your_username'` |
 | `repo` | `string` | ✅ | GitHub 仓库名称 | `'your_repo_name'` |
 | `pageSize` | `number` | ❌ | 每页加载的 issue 数量（默认：6） | `6` |
-| `autoProxy` | `string` | ❌ | OAuth 代理 URL（默认：'/api/github-oauth'） | `'/api/github-oauth'` |
-| `enableGithubApiProxy` | `boolean` | ❌ | 是否启用 GitHub API 代理，用于代理 api.github.com 和 githubusercontent.com（默认：false） | `true` |
+| `autoProxy` | `string` | ❌ | OAuth 请求的 CORS 代理 URL | `'https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token'` |
+| `enableGithubApiProxy` | `boolean` | ❌ | 是否启用 GitHub API 代理（默认：false） | `false` |
 | `githubApiProxyUrl` | `string` | ❌ | GitHub API 代理服务的 URL（默认：'/api/github-proxy'） | `'/api/github-proxy'` |
 
 **options.config.app** (Object) - **可选**
@@ -348,18 +348,4 @@ gwitter({
 | `onlyShowOwner` | `boolean` | `false` | 只显示仓库所有者的 issues | `false` |
 | `enableRepoSwitcher` | `boolean` | `false` | 启用仓库切换功能 | `false` |
 | `enableAbout` | `boolean` | `false` | 显示关于页面/部分 | `false` |
-| `enableEgg` | `boolean` | `false` | 启用彩蛋功能 | `false` |
-
-#### 使用 GitHub 内容代理
-
-当 `enableGithubApiProxy` 设置为 `true` 时，应用程序将使用代理服务处理所有 GitHub API 和内容请求。对于 githubusercontent.com 的内容：
-
-1. 代理 raw.githubusercontent.com 内容：
-   - 原始URL：`https://raw.githubusercontent.com/user/repo/branch/path/to/file`
-   - 代理URL：`/api/github-proxy/raw/user/repo/branch/path/to/file`
-
-2. 代理 user-images.githubusercontent.com 内容：
-   - 原始URL：`https://user-images.githubusercontent.com/path/to/image`
-   - 代理URL：`/api/github-proxy/user-content/path/to/image`
-
-此功能对于 GitHub 内容可能被阻止或访问缓慢的地区特别有用。
+| `enableEgg` | `boolean` | `false` | 启用彩蛋功能 | `

@@ -198,11 +198,7 @@ export const getUserInfo = async (token: string) => {
 };
 
 export const getAccessToken = async (code: string) => {
-  const oauthProxyUrl = config.request.enableGithubApiProxy
-    ? '/api/github-oauth'
-    : config.request.autoProxy;
-    
-  const response = await axios.post(oauthProxyUrl, {
+  const response = await axios.post(config.request.autoProxy, {
     client_id: config.request.clientID,
     client_secret: config.request.clientSecret,
     code,

@@ -27,17 +27,17 @@ let config = {
     pageSize: Number(getEnvVar('PAGE_SIZE', '6')),
     autoProxy: getEnvVar(
       'OAUTH_PROXY',
-      '/api/github-oauth'
+      'https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token'
     ),
     owner: getEnvVar('GITHUB_OWNER', 'dengchangdong'),
     repo: getEnvVar('GITHUB_REPO', 'IssuesMemos'),
     // GitHub API 代理配置
-    enableGithubApiProxy: parseBoolean(getEnvVar('ENABLE_GITHUB_API_PROXY', 'true')),
+    enableGithubApiProxy: parseBoolean(getEnvVar('ENABLE_GITHUB_API_PROXY', 'false')),
     githubApiProxyUrl: getEnvVar('GITHUB_API_PROXY_URL', '/api/github-proxy'),
   },
 
   app: {
-    onlyShowOwner: parseBoolean(getEnvVar('ONLY_SHOW_OWNER', 'true')),
+    onlyShowOwner: parseBoolean(getEnvVar('ONLY_SHOW_OWNER', 'false')),
     siteName: getEnvVar('SITE_NAME', '归零杂记'),
   },
 };

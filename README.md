@@ -204,10 +204,10 @@ gwitter({
       pageSize: 6,
 
       // CORS proxy (optional)
-      autoProxy: '/api/github-oauth',
+      autoProxy: 'https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token',
       
       // GitHub API proxy configuration (optional)
-      enableGithubApiProxy: true, // set to true to enable proxy
+      enableGithubApiProxy: false, // set to true to enable proxy
       githubApiProxyUrl: '/api/github-proxy', // path to proxy API endpoint
     },
     app: {
@@ -254,10 +254,10 @@ For direct browser usage without build tools:
         pageSize: 6,
 
         // CORS proxy (optional)
-        autoProxy: '/api/github-oauth',
+        autoProxy: 'https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token',
         
         // GitHub API proxy configuration (optional)
-        enableGithubApiProxy: true, // set to true to enable proxy
+        enableGithubApiProxy: false, // set to true to enable proxy
         githubApiProxyUrl: '/api/github-proxy', // path to proxy API endpoint
       },
       app: {
@@ -335,8 +335,8 @@ Main function to initialize and render Gwitter.
 | `owner` | `string` | ✅ | GitHub repository owner (username) | `'your_username'` |
 | `repo` | `string` | ✅ | GitHub repository name | `'your_repo_name'` |
 | `pageSize` | `number` | ❌ | Number of issues to load per page (default: 6) | `6` |
-| `autoProxy` | `string` | ❌ | OAuth proxy URL (default: '/api/github-oauth') | `'/api/github-oauth'` |
-| `enableGithubApiProxy` | `boolean` | ❌ | Whether to enable GitHub API proxy for api.github.com and githubusercontent.com (default: false) | `true` |
+| `autoProxy` | `string` | ❌ | CORS proxy URL for OAuth requests | `'https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token'` |
+| `enableGithubApiProxy` | `boolean` | ❌ | Whether to enable GitHub API proxy (default: false) | `false` |
 | `githubApiProxyUrl` | `string` | ❌ | URL of the GitHub API proxy service (default: '/api/github-proxy') | `'/api/github-proxy'` |
 
 **options.config.app** (Object) - **Optional**
@@ -348,20 +348,6 @@ Main function to initialize and render Gwitter.
 | `enableRepoSwitcher` | `boolean` | `false` | Enable repository switching functionality | `false` |
 | `enableAbout` | `boolean` | `false` | Show About page/section | `false` |
 | `enableEgg` | `boolean` | `false` | Enable easter egg features | `false` |
-
-#### Using the GitHub Content Proxy
-
-When `enableGithubApiProxy` is set to `true`, the application will use the proxy for all GitHub API and content requests. For githubusercontent.com content:
-
-1. To proxy raw.githubusercontent.com content:
-   - Original URL: `https://raw.githubusercontent.com/user/repo/branch/path/to/file`
-   - Proxied URL: `/api/github-proxy/raw/user/repo/branch/path/to/file`
-
-2. To proxy user-images.githubusercontent.com content:
-   - Original URL: `https://user-images.githubusercontent.com/path/to/image`
-   - Proxied URL: `/api/github-proxy/user-content/path/to/image`
-
-This feature is particularly useful for regions where GitHub content may be blocked or slow to access.
 
 **Returns:**
 - `Promise<void>` - Resolves when Gwitter is successfully initialized
