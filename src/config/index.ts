@@ -1,4 +1,4 @@
-import { iMemosConfig } from '../types/global';
+import { GwitterConfig } from '../types/global';
 
 // 从环境变量或默认值获取配置
 const getEnvVar = (key: string, defaultValue: string): string => {
@@ -41,7 +41,7 @@ let config = {
   },
 };
 
-export function setConfig(newConfig: iMemosConfig) {
+export function setConfig(newConfig: GwitterConfig) {
   if (newConfig.request) {
     config.request = {
       ...config.request,
