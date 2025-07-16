@@ -345,7 +345,6 @@ gwitter({
 
 | 属性 | 类型 | 默认值 | 说明 | 示例 |
 |------|------|--------|------|------|
-| `onlyShowOwner` | `boolean` | `false` | 只显示仓库所有者的 issues | `false` |
 | `enableRepoSwitcher` | `boolean` | `false` | 启用仓库切换功能 | `false` |
 | `enableAbout` | `boolean` | `false` | 显示关于页面/部分 | `false` |
 | `enableEgg` | `boolean` | `false` | 启用彩蛋功能 | `false` |
@@ -361,5 +360,9 @@ gwitter({
 2. 代理 user-images.githubusercontent.com 内容：
    - 原始URL：`https://user-images.githubusercontent.com/path/to/image`
    - 代理URL：`/api/github-proxy/user-content/path/to/image`
+
+3. 代理 avatars.githubusercontent.com 内容：
+   - 原始URL：`https://avatars.githubusercontent.com/u/12345678?v=4`
+   - 代理URL：`/api/github-proxy/avatars/u/12345678?v=4`
 
 此功能对于 GitHub 内容可能被阻止或访问缓慢的地区特别有用。

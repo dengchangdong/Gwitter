@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import 'github-markdown-css/github-markdown.css';
 import { useTranslation } from 'react-i18next';
-import { formatDate, ProcessedIssue, processLinksInHTML } from '../utils';
+import { formatDate, ProcessedIssue, processLinksInHTML, processAvatarUrl } from '../utils';
 import Label from './Label';
 import {
   IssueBody,
@@ -132,7 +132,7 @@ const Issue = ({
       <IssueContent>
         <IssueHeader>
           <UserAvatar
-            src={issue.author.avatarUrl}
+            src={processAvatarUrl(issue.author.avatarUrl)}
             onClick={() => windowOpen(issue.author.url)}
           />
           <Username onClick={() => windowOpen(issue.author.url)}>

@@ -344,7 +344,6 @@ Main function to initialize and render Gwitter.
 
 | Property | Type | Default | Description | Example |
 |----------|------|---------|-------------|---------|
-| `onlyShowOwner` | `boolean` | `false` | Show only repository owner's issues | `false` |
 | `enableRepoSwitcher` | `boolean` | `false` | Enable repository switching functionality | `false` |
 | `enableAbout` | `boolean` | `false` | Show About page/section | `false` |
 | `enableEgg` | `boolean` | `false` | Enable easter egg features | `false` |
@@ -360,6 +359,10 @@ When `enableGithubApiProxy` is set to `true`, the application will use the proxy
 2. To proxy user-images.githubusercontent.com content:
    - Original URL: `https://user-images.githubusercontent.com/path/to/image`
    - Proxied URL: `/api/github-proxy/user-content/path/to/image`
+
+3. To proxy avatars.githubusercontent.com content:
+   - Original URL: `https://avatars.githubusercontent.com/u/12345678?v=4`
+   - Proxied URL: `/api/github-proxy/avatars/u/12345678?v=4`
 
 This feature is particularly useful for regions where GitHub content may be blocked or slow to access.
 
@@ -380,7 +383,6 @@ gwitter({
       pageSize: 10,
     },
     app: {
-      onlyShowOwner: true,
       enableAbout: true,
     }
   }

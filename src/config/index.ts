@@ -32,12 +32,11 @@ let config = {
     owner: getEnvVar('GITHUB_OWNER', 'dengchangdong'),
     repo: getEnvVar('GITHUB_REPO', 'IssuesMemos'),
     // GitHub API 代理配置
-    enableGithubApiProxy: parseBoolean(getEnvVar('ENABLE_GITHUB_API_PROXY', 'false')),
+    enableGithubApiProxy: parseBoolean(getEnvVar('ENABLE_GITHUB_API_PROXY', 'true')),
     githubApiProxyUrl: getEnvVar('GITHUB_API_PROXY_URL', '/api/github-proxy'),
   },
 
   app: {
-    onlyShowOwner: parseBoolean(getEnvVar('ONLY_SHOW_OWNER', 'false')),
     siteName: getEnvVar('SITE_NAME', '归零杂记'),
   },
 };

@@ -6,7 +6,7 @@ import {
   useState,
 } from 'react';
 import config from '../config';
-import { queryStringify, windowOpen } from '../utils';
+import { processAvatarUrl, queryStringify, windowOpen } from '../utils';
 import { getUserInfo } from '../utils/request';
 
 interface AuthContextType {
@@ -54,7 +54,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const response = await getUserInfo(code);
       const user = {
         login: response.login,
-        avatarUrl: response.avatar_url,
+        avatarUrl: processAvatarUrl(response.avatar_url),
       };
 
       setToken(code);

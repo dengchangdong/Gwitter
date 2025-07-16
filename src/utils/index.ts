@@ -1,5 +1,6 @@
 import { format, formatDistance, formatRelative } from 'date-fns';
 import { enUS, zhCN } from 'date-fns/locale';
+import config from '../config';
 
 export const parseUrl = (
   search = window.location.search,
@@ -321,6 +322,27 @@ export const processLinksInHTML = (html: string) => {
   });
 
   return div.innerHTML;
+};
+
+/**
+ * 处理GitHub头像URL，如果启用代理则转换为代理URL
+ * @param avatarUrl GitHub头像URL
+ * @returns 处理后的URL
+ */
+export const processAvatarUrl = (avatarUrl: string): string => {
+  if (!config.request.enableGithubApiProxy) {
+    return avatarUrl;
+  }
+
+  // 处理avatars.githubusercontent.com的URL
+  if (avatarUrl && avatarUrl.includes('avatars.githubusercontent.com')) {
+    const urlParts = avatarUrl.split('avatars.githubusercontent.com');
+    if (urlParts.length > 1) {
+      return `${config.request.githubApiProxyUrl}/avatars${urlParts[1]}`;
+    }
+  }
+
+  return avatarUrl;
 };
 
 const G_OWNER = 'owner';
