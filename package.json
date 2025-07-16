@@ -1,10 +1,10 @@
 {
-  "name": "gwitter",
+  "name": "imemos",
   "version": "1.0.5",
   "description": "Turn GitHub Issues into your personal microblog platform",
-  "main": "dist/gwitter.min.js",
-  "module": "dist/gwitter.esm.js",
-  "types": "dist/gwitter.d.ts",
+  "main": "dist/imemos.min.js",
+  "module": "dist/imemos.esm.js",
+  "types": "dist/imemos.d.ts",
   "files": [
     "dist",
     "README.md",

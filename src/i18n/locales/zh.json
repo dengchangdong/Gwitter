@@ -15,7 +15,7 @@
   "about": {
     "title": "Details & Summary",
     "gwitter": {
-      "title": "🎉 关于 Gwitter",
+      "title": "🎉 关于 iMemos",
       "description": "这是一个基于 GitHub Issues 构建的轻量级微博应用。这里记录着我对技术的思考、对生活的感悟，以及一些有趣的发现，欢迎一起交流。"
     },
     "content": {
@@ -26,7 +26,7 @@
       "title": "🔊 关于订阅",
       "watch": "Watch",
       "join": "Join",
-      "repo": "Gwitter 仓库",
+      "repo": "iMemos 仓库",
       "wechat": "微信群",
       "telegram": "TG 频道"
     }

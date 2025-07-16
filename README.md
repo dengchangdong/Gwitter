@@ -1,16 +1,16 @@
-# Gwitter
+# iMemos
 
 [中文版本](README.zh_CN.md)
 
 ## 🎮 Playground
 
-- **🌐 Live Demo**: [https://simonaking.com/Gwitter](https://simonaking.com/Gwitter) - Experience Gwitter in action
-- **💭 Share Your Thoughts**: [Create an Issue](https://github.com/SimonAKing/Gwitter/issues) to join the conversation
+- **🌐 Live Demo**: [https://simonaking.com/iMemos](https://simonaking.com/iMemos) - Experience iMemos in action
+- **💭 Share Your Thoughts**: [Create an Issue](https://github.com/SimonAKing/iMemos/issues) to join the conversation
 - **📚 Browse Discussions**: Explore existing thoughts and insights on the demo site
 
 ## ✨ Project Introduction
 
-✨ **The Story Behind "Gwitter"**
+✨ **The Story Behind "iMemos"**
 
 Ever wondered what happens when you combine the world's most powerful issue tracker with the globe's favorite microblogging platform? 🤔
 
@@ -18,12 +18,12 @@ Ever wondered what happens when you combine the world's most powerful issue trac
 
 **Twitter** 🐦 = Where thoughts become conversations worldwide
 
-**Gwitter** 🚀 = Turn GitHub Issues into your personal microblog platform!
+**iMemos** 🚀 = Turn GitHub Issues into your personal microblog platform!
 
 ![preview](https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExOGwyY3F1anhjbDIwMDFoYW9sMGZqdGN2bnJpamM2bXQ5M3E5ZTY5NCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/J43gtVHbTeNHMIepID/giphy.gif)
-> **📱 Author's Gwitter**: [https://simonaking.com/blog/weibo/](https://simonaking.com/blog/weibo/) - See how Gwitter is used in practice
+> **📱 Author's iMemos**: [https://simonaking.com/blog/weibo/](https://simonaking.com/blog/weibo/) - See how iMemos is used in practice
 
-Gwitter is a lightweight microblogging application built on GitHub Issues. It records my thoughts on technology, life insights, and interesting discoveries. Welcome to join the discussion!
+iMemos is a lightweight microblogging application built on GitHub Issues. It records my thoughts on technology, life insights, and interesting discoveries. Welcome to join the discussion!
 
 ## 🚀 Key Features
 

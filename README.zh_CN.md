@@ -1,29 +1,29 @@
-# Gwitter
+# iMemos
 
 [English Version](README.md)
 
 ## 🎮 在线体验
 
-- **🌐 在线演示**: [https://simonaking.com/Gwitter](https://simonaking.com/Gwitter) - 体验 Gwitter 的完整功能
-- **💭 分享想法**: [创建 Issue](https://github.com/SimonAKing/Gwitter/issues) 参与讨论交流
+- **🌐 在线演示**: [https://simonaking.com/iMemos](https://simonaking.com/iMemos) - 体验 iMemos 的完整功能
+- **💭 分享想法**: [创建 Issue](https://github.com/SimonAKing/iMemos/issues) 参与讨论交流
 - **📚 浏览讨论**: 在演示站点上探索现有的思考和见解
 
 ## ✨ 项目介绍
 
-✨ **"Gwitter" 背后的故事**
+✨ **"iMemos" 背后的故事**
 
-你有没有想过，当世界上最强大的“笔记”应用遇到全球最受欢迎的微博平台，会碰撞出什么火花？🤔
+你有没有想过，当世界上最强大的"笔记"应用遇到全球最受欢迎的微博平台，会碰撞出什么火花？🤔
 
 **GitHub Issues** 📝 = 被低估的笔记神器（认真的，它超棒！）
 
 **Twitter** 🐦 = 世界上最大的微博平台
 
-**Gwitter** 🚀 = 将 GitHub Issues 转化为个人微博平台！
+**iMemos** 🚀 = 将 GitHub Issues 转化为个人微博平台！
 
 ![preview](https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExOGwyY3F1anhjbDIwMDFoYW9sMGZqdGN2bnJpamM2bXQ5M3E5ZTY5NCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/J43gtVHbTeNHMIepID/giphy.gif)
-> **📱 作者的 Gwitter**: [https://simonaking.com/blog/weibo/](https://simonaking.com/blog/weibo/) - 看看 Gwitter 在实际中的应用
+> **📱 作者的 iMemos**: [https://simonaking.com/blog/weibo/](https://simonaking.com/blog/weibo/) - 看看 iMemos 在实际中的应用
 
-Gwitter 是一个基于 GitHub Issues 构建的轻量级微博应用。这里记录着我对技术的思考、对生活的感悟，以及一些有趣的发现，欢迎一起交流探讨。
+iMemos 是一个基于 GitHub Issues 构建的轻量级微博应用。这里记录着我对技术的思考、对生活的感悟，以及一些有趣的发现，欢迎一起交流探讨。
 
 ## 🚀 亮点功能
 

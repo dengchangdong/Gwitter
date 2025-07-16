@@ -14,8 +14,8 @@
   },
   "about": {
     "title": "Details & Summary",
-    "gwitter": {
-      "title": "🎉 About Gwitter",
+    "iMemos": {
+      "title": "🎉 About iMemos",
       "description": "This is a lightweight microblogging application built on GitHub Issues. Here I record my thoughts on technology, insights into life, and some interesting discoveries. Welcome to join the discussion."
     },
     "content": {
@@ -26,7 +26,7 @@
       "title": "🔊 About Subscription",
       "watch": "Watch",
       "join": "Join",
-      "repo": "Gwitter Repository",
+      "repo": "iMemos Repository",
       "wechat": "WeChat Group",
       "telegram": "TG Channel"
     }

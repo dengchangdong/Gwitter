@@ -251,7 +251,7 @@ export const windowOpen = (_url: string) => {
     width=${windowArea.width},height=${windowArea.height},
     left=${windowArea.left},top=${windowArea.top}`;
 
-  const authWindow = window.open(url, 'Gwitter OAuth Application', windowOpts);
+  const authWindow = window.open(url, 'iMemos OAuth Application', windowOpts);
   const eventMethod =
     'addEventListener' in window ? 'addEventListener' : 'attachEvent';
   const eventer = (window as any)[eventMethod];

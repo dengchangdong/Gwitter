@@ -1,4 +1,4 @@
-export interface GwitterConfig {
+export interface iMemosConfig {
   request?: {
     token?: string[];
     clientID?: string;
@@ -15,13 +15,13 @@ export interface GwitterConfig {
   };
 }
 
-export interface GwitterOptions {
+export interface iMemosOptions {
   container?: HTMLElement;
-  config?: GwitterConfig;
+  config?: iMemosConfig;
 }
 
 declare global {
   interface Window {
-    gwitter?: (options?: GwitterOptions) => void;
+    iMemos?: (options?: iMemosOptions) => void;
   }
 }
