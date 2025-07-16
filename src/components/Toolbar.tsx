@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import config from '../config';
 import { useAuth } from '../hooks/useAuth';
 import LanguageSwitcher from './LanguageSwitcher';
-import { processAvatarUrl } from '../utils';
 
 const slideInTop = keyframes`
   0% {
@@ -166,7 +165,7 @@ const Toolbar = ({
         ) : isAuthenticated && user ? (
           <LoginInfo>
             <AvatarContainer>
-              <Avatar src={processAvatarUrl(user.avatarUrl)} alt={user.login} />
+              <Avatar src={user.avatarUrl} alt={user.login} />
             </AvatarContainer>
             <AuthButton onClick={logout}>{t('auth.logout')}</AuthButton>
           </LoginInfo>

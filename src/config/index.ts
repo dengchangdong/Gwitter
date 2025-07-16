@@ -37,6 +37,7 @@ let config = {
   },
 
   app: {
+    onlyShowOwner: parseBoolean(getEnvVar('ONLY_SHOW_OWNER', 'true')),
     siteName: getEnvVar('SITE_NAME', '归零杂记'),
   },
 };

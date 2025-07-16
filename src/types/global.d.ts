@@ -11,6 +11,7 @@ export interface GwitterConfig {
     githubApiProxyUrl?: string;
   };
   app?: {
+    onlyShowOwner?: boolean;
     siteName?: string;
   };
 }

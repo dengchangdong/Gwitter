@@ -36,10 +36,6 @@ export default async function handler(req, res) {
       // 移除 /user-content 前缀，准备代理到 user-images.githubusercontent.com
       requestPath = path.substring(13);
       baseUrl = 'https://user-images.githubusercontent.com';
-    } else if (path.startsWith('/avatars')) {
-      // 移除 /avatars 前缀，准备代理到 avatars.githubusercontent.com
-      requestPath = path.substring(8);
-      baseUrl = 'https://avatars.githubusercontent.com';
     }
     
     // 构建GitHub请求URL
