@@ -7,7 +7,6 @@ import SkeletonCard from './components/SkeletonCard';
 import Toolbar from './components/Toolbar';
 import config from './config';
 
-import { AuthProvider, useAuth } from './hooks/useAuth';
 import {
   ProcessedIssue,
   transformIssues,
@@ -60,7 +59,6 @@ const ErrorSubText = styled.span`
 `;
 
 const App = () => {
-  const { user } = useAuth();
   const [issues, setIssues] = useState<ProcessedIssue[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isRepoLoading, setIsRepoLoading] = useState(true);
@@ -78,7 +76,6 @@ const App = () => {
   const cursorRef = useRef<string | null>(null);
   const isLoadingRef = useRef(isLoading);
   const lastIssueRef = useRef<HTMLDivElement>(null);
-  const currentUserRef = useRef(user?.login);
   const currentRepoRef = useRef(currentRepo);
   const loadMoreTriggeredRef = useRef(false);
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -87,10 +84,6 @@ const App = () => {
   useEffect(() => {
     isLoadingRef.current = isLoading;
   }, [isLoading]);
-
-  useEffect(() => {
-    currentUserRef.current = user?.login;
-  }, [user?.login]);
 
   useEffect(() => {
     currentRepoRef.current = currentRepo;
@@ -131,7 +124,7 @@ const App = () => {
 
       setIssues((prev) => [
         ...prev,
-        ...transformIssues(data.nodes, currentUserRef.current),
+        ...transformIssues(data.nodes, null),
       ]);
 
       setIsLoading(false);
@@ -191,7 +184,7 @@ const App = () => {
       setHasNextPage(nextPage);
       cursorRef.current = endCursor;
       setRawIssuesData(data.nodes);
-      setIssues(transformIssues(data.nodes, currentUserRef.current));
+      setIssues(transformIssues(data.nodes, null));
 
       setIsLoading(false);
       setIsRepoLoading(false);
@@ -343,9 +336,9 @@ const App = () => {
 
   useEffect(() => {
     if (rawIssuesData.length > 0) {
-      setIssues(transformIssues(rawIssuesData, user?.login));
+      setIssues(transformIssues(rawIssuesData, null));
     }
-  }, [user?.login, rawIssuesData]);
+  }, [rawIssuesData]);
 
   useEffect(() => {
     return () => {
@@ -407,12 +400,4 @@ const App = () => {
   );
 };
 
-const AppWithAuth = () => {
-  return (
-    <AuthProvider>
-      <App />
-    </AuthProvider>
-  );
-};
-
-export default AppWithAuth;
+export default App;

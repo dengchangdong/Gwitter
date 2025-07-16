@@ -196,12 +196,3 @@ export const getUserInfo = async (token: string) => {
   });
   return response.data;
 };
-
-export const getAccessToken = async (code: string) => {
-  const response = await axios.post(config.request.autoProxy, {
-    client_id: config.request.clientID,
-    client_secret: config.request.clientSecret,
-    code,
-  });
-  return response.data;
-};

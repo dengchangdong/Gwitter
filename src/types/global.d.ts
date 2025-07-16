@@ -1,10 +1,7 @@
 export interface GwitterConfig {
   request?: {
     token?: string[];
-    clientID?: string;
-    clientSecret?: string;
     pageSize?: number;
-    autoProxy?: string;
     owner?: string;
     repo?: string;
     enableGithubApiProxy?: boolean;

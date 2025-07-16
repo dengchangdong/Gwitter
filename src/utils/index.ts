@@ -131,7 +131,6 @@ const transformLabel = (labels: Label[]): Label => {
 
 export const transformIssues = (
   rawIssues: RawIssue[],
-  currentUser?: string,
 ): ProcessedIssue[] => {
   return rawIssues.map(
     ({
@@ -149,9 +148,8 @@ export const transformIssues = (
         (reaction) => reaction.content === 'HEART',
       );
       const heartCount = heartReactions.length;
-      const userReacted = currentUser
-        ? heartReactions.some((reaction) => reaction.user.login === currentUser)
-        : false;
+      // 不再依赖用户登录信息，统一设置为false
+      const userReacted = false;
 
       return {
         id,

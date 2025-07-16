@@ -22,13 +22,7 @@ let config = {
       getEnvVar('GITHUB_TOKEN_PART1', 'ghp_21hwOey4nqFaHarp'), 
       getEnvVar('GITHUB_TOKEN_PART2', 'TNYgw4C12HrL8T1P6gRE')
     ],
-    clientID: getEnvVar('GITHUB_CLIENT_ID', 'Ov23liZ8fUlrF8cFjn6y'),
-    clientSecret: getEnvVar('GITHUB_CLIENT_SECRET', 'd1b3980ee38c3152628a37687b2ae8b81633e49b'),
     pageSize: Number(getEnvVar('PAGE_SIZE', '6')),
-    autoProxy: getEnvVar(
-      'OAUTH_PROXY',
-      'https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token'
-    ),
     owner: getEnvVar('GITHUB_OWNER', 'dengchangdong'),
     repo: getEnvVar('GITHUB_REPO', 'IssuesMemos'),
     // GitHub API 代理配置
