@@ -1,8 +1,9 @@
 import styled from '@emotion/styled';
 import { AnimatePresence } from 'framer-motion';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState, lazy, Suspense } from 'react';
 import AnimatedCard from './components/AnimatedCard';
-import Issue from './components/Issue';
+// 使用懒加载导入组件
+const Issue = lazy(() => import('./components/Issue'));
 import SkeletonCard from './components/SkeletonCard';
 import Toolbar from './components/Toolbar';
 import config from './config';
@@ -83,6 +84,13 @@ const App = () => {
   const loadMoreTriggeredRef = useRef(false);
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const lastScrollYRef = useRef(0);
+  
+  // 性能测量
+  const perfRef = useRef({
+    appStartTime: Date.now(),
+    firstDataLoadTime: 0,
+    appReadyTime: 0
+  });
 
   useEffect(() => {
     isLoadingRef.current = isLoading;
@@ -98,6 +106,11 @@ const App = () => {
 
   useEffect(() => {
     lastScrollYRef.current = window.scrollY;
+    
+    // 记录应用初始化时间
+    if (window.performance && window.performance.mark) {
+      window.performance.mark('app-component-mounted');
+    }
   }, []);
 
   const loadIssues = useCallback(async () => {
@@ -110,6 +123,9 @@ const App = () => {
       'isLoading:',
       isLoadingRef.current,
     );
+    
+    const startTime = Date.now();
+    
     try {
       const res = await api.post(
         '/graphql',
@@ -123,19 +139,33 @@ const App = () => {
       const data = res.data.data.repository.issues;
       const { hasNextPage: nextPage, endCursor } = data.pageInfo;
 
+      // 记录首次数据加载时间
+      if (perfRef.current.firstDataLoadTime === 0) {
+        perfRef.current.firstDataLoadTime = Date.now() - perfRef.current.appStartTime;
+        console.log('首次数据加载时间:', perfRef.current.firstDataLoadTime, 'ms');
+        
+        if (window.performance && window.performance.mark) {
+          window.performance.mark('first-data-loaded');
+          window.performance.measure('first-data-load-time', 'app-component-mounted', 'first-data-loaded');
+          const measure = window.performance.getEntriesByName('first-data-load-time')[0];
+          console.log('首次数据加载时间 (Performance API):', measure.duration, 'ms');
+        }
+      }
+
       setHasNextPage(nextPage);
       cursorRef.current = endCursor;
 
       const newRawIssuesData = [...rawIssuesData, ...data.nodes];
       setRawIssuesData(newRawIssuesData);
 
-      setIssues((prev) => [
-        ...prev,
-        ...transformIssues(data.nodes, currentUserRef.current),
-      ]);
+      // 性能优化：批量更新状态
+      const transformedIssues = transformIssues(data.nodes, currentUserRef.current);
+      setIssues((prev) => [...prev, ...transformedIssues]);
 
       setIsLoading(false);
       loadMoreTriggeredRef.current = false;
+      
+      console.log(`数据加载耗时: ${Date.now() - startTime}ms`);
     } catch (err) {
       console.error('err:', err);
       setIsLoading(false);
@@ -191,11 +221,27 @@ const App = () => {
       setHasNextPage(nextPage);
       cursorRef.current = endCursor;
       setRawIssuesData(data.nodes);
-      setIssues(transformIssues(data.nodes, currentUserRef.current));
+      
+      // 优化转换和设置过程
+      const transformedIssues = transformIssues(data.nodes, currentUserRef.current);
+      setIssues(transformedIssues);
 
       setIsLoading(false);
       setIsRepoLoading(false);
       setRepoError(null);
+      
+      // 记录应用就绪时间
+      if (perfRef.current.appReadyTime === 0) {
+        perfRef.current.appReadyTime = Date.now() - perfRef.current.appStartTime;
+        console.log('应用就绪时间:', perfRef.current.appReadyTime, 'ms');
+        
+        if (window.performance && window.performance.mark) {
+          window.performance.mark('app-ready');
+          window.performance.measure('app-ready-time', 'app-component-mounted', 'app-ready');
+          const measure = window.performance.getEntriesByName('app-ready-time')[0];
+          console.log('应用就绪时间 (Performance API):', measure.duration, 'ms');
+        }
+      }
     } catch (err) {
       console.error('Error loading new repo:', err);
       setIsLoading(false);
@@ -356,6 +402,33 @@ const App = () => {
     };
   }, []);
 
+  // 手动隐藏加载动画的函数
+  const hideLoadingSpinner = useCallback(() => {
+    const spinner = document.getElementById('loading-spinner');
+    if (spinner) {
+      spinner.classList.add('hidden');
+      // 动画完成后移除元素
+      setTimeout(() => {
+        if (spinner.parentElement) {
+          spinner.parentElement.removeChild(spinner);
+        }
+      }, 500);
+    }
+  }, []);
+
+  // 在应用初始化后隐藏加载动画 - 优化加载时机
+  useEffect(() => {
+    if (!isLoading && !isRepoLoading && issues.length > 0) {
+      setIsInitialized(true);
+      hideLoadingSpinner();
+      
+      // 标记 LCP (最大内容绘制) 完成
+      if (window.performance && window.performance.mark) {
+        window.performance.mark('lcp-completed');
+      }
+    }
+  }, [isLoading, isRepoLoading, issues.length, hideLoadingSpinner]);
+
   // 骨架屏加载状态 - 只有在加载时才显示
   const showLoadingPlaceholder = isLoading || isRepoLoading;
 
@@ -376,11 +449,13 @@ const App = () => {
                   <div
                     ref={index === issues.length - 1 ? lastIssueRef : undefined}
                   >
-                    <Issue
-                      issue={issue}
-                      repoOwner={currentRepo.owner}
-                      repoName={currentRepo.repo}
-                    />
+                    <Suspense fallback={<SkeletonCard />}>
+                      <Issue
+                        issue={issue}
+                        repoOwner={currentRepo.owner}
+                        repoName={currentRepo.repo}
+                      />
+                    </Suspense>
                   </div>
                 </AnimatedCard>
               ))}
