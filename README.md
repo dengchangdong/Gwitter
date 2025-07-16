@@ -212,7 +212,6 @@ gwitter({
     },
     app: {
       // Application feature toggles
-      onlyShowOwner: false,
       enableRepoSwitcher: false,
       enableAbout: false,
       enableEgg: false,
@@ -262,7 +261,6 @@ For direct browser usage without build tools:
       },
       app: {
         // Application feature toggles
-        onlyShowOwner: false,
         enableRepoSwitcher: false,
         enableAbout: false,
         enableEgg: false,
@@ -344,7 +342,6 @@ Main function to initialize and render Gwitter.
 
 | Property | Type | Default | Description | Example |
 |----------|------|---------|-------------|---------|
-| `onlyShowOwner` | `boolean` | `false` | Show only repository owner's issues | `false` |
 | `enableRepoSwitcher` | `boolean` | `false` | Enable repository switching functionality | `false` |
 | `enableAbout` | `boolean` | `false` | Show About page/section | `false` |
 | `enableEgg` | `boolean` | `false` | Enable easter egg features | `false` |
@@ -366,7 +363,6 @@ gwitter({
       pageSize: 10,
     },
     app: {
-      onlyShowOwner: true,
       enableAbout: true,
     }
   }

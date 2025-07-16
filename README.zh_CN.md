@@ -213,7 +213,6 @@ gwitter({
     },
     app: {
       // 应用功能开关
-      onlyShowOwner: false,
       enableRepoSwitcher: false,
       enableAbout: false,
       enableEgg: false,
@@ -263,7 +262,6 @@ gwitter({
       },
       app: {
         // 应用功能开关
-        onlyShowOwner: false,
         enableRepoSwitcher: false,
         enableAbout: false,
         enableEgg: false,
@@ -345,7 +343,6 @@ gwitter({
 
 | 属性 | 类型 | 默认值 | 说明 | 示例 |
 |------|------|--------|------|------|
-| `onlyShowOwner` | `boolean` | `false` | 只显示仓库所有者的 issues | `false` |
 | `enableRepoSwitcher` | `boolean` | `false` | 启用仓库切换功能 | `false` |
 | `enableAbout` | `boolean` | `false` | 显示关于页面/部分 | `false` |
-| `enableEgg` | `boolean` | `false` | 启用彩蛋功能 | `
+| `enableEgg` | `boolean` | `false` | 启用彩蛋功能 | `false` |
