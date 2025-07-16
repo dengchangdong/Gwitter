@@ -1,3 +1,4 @@
+import styled from '@emotion/styled';
 import { AnimatePresence } from 'framer-motion';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import AnimatedCard from './components/AnimatedCard';
@@ -13,21 +14,50 @@ import {
 } from './utils';
 import { api, getIssuesQL } from './utils/request';
 
-// Tailwind CSS 加载占位符组件
-interface LoadingPlaceholderProps {
-  visible: boolean;
-  children: React.ReactNode;
-}
+const Container = styled.div`
+  box-sizing: border-box;
+  * {
+    box-sizing: border-box;
+  }
+`;
 
-const LoadingPlaceholder = ({ visible, children }: LoadingPlaceholderProps) => (
-  <div 
-    className={`min-h-[200px] w-full flex flex-col transition-opacity duration-300 ease-in-out ${
-      visible ? 'visible opacity-100' : 'invisible opacity-0'
-    }`}
-  >
-    {children}
-  </div>
-);
+const IssuesContainer = styled.div`
+  /* letter-spacing: 1px; */
+`;
+
+const LoadingPlaceholder = styled.div<{ visible: boolean }>`
+  min-height: 200px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  visibility: ${(props) => (props.visible ? 'visible' : 'hidden')};
+  opacity: ${(props) => (props.visible ? 1 : 0)};
+  transition: opacity 0.3s ease;
+`;
+
+const ErrorContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  text-align: center;
+`;
+
+const ErrorIcon = styled.span`
+  font-size: 24px;
+  margin-bottom: 10px;
+`;
+
+const ErrorText = styled.span`
+  font-size: 18px;
+  font-weight: bold;
+`;
+
+const ErrorSubText = styled.span`
+  font-size: 14px;
+  color: #666;
+`;
 
 const App = () => {
   const { user } = useAuth();
@@ -330,7 +360,7 @@ const App = () => {
   const showLoadingPlaceholder = isLoading || isRepoLoading;
 
   return (
-    <div className="box-border">
+    <Container>
       <Toolbar
         onRepoChange={handleRepoChange}
         currentRepo={currentRepo}
@@ -339,7 +369,7 @@ const App = () => {
       />
       {issues.length > 0 && (
         <>
-          <div>
+          <IssuesContainer>
             <AnimatePresence mode="popLayout">
               {issues.map((issue, index) => (
                 <AnimatedCard key={issue.id} id={issue.id}>
@@ -355,7 +385,7 @@ const App = () => {
                 </AnimatedCard>
               ))}
             </AnimatePresence>
-          </div>
+          </IssuesContainer>
         </>
       )}
       <LoadingPlaceholder visible={showLoadingPlaceholder}>
@@ -363,15 +393,17 @@ const App = () => {
         <SkeletonCard />
       </LoadingPlaceholder>
       {repoError && (
-        <div className="flex flex-col items-center justify-center p-5 text-center">
-          <span className="text-2xl mb-2.5">⚠️</span>
-          <span className="text-lg font-bold">{repoError}</span>
-          <span className="text-sm text-gray-600">
-            Please check the repository name and try again.
-          </span>
-        </div>
+        <IssuesContainer>
+          <ErrorContainer>
+            <ErrorIcon>⚠️</ErrorIcon>
+            <ErrorText>{repoError}</ErrorText>
+            <ErrorSubText>
+              Please check the repository name and try again.
+            </ErrorSubText>
+          </ErrorContainer>
+        </IssuesContainer>
       )}
-    </div>
+    </Container>
   );
 };
 

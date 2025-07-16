@@ -52,15 +52,6 @@ export default defineConfig({
         },
         type: 'javascript/auto',
       },
-      // 添加对 CSS 的支持，包括 Tailwind CSS
-      {
-        test: /\.css$/,
-        use: [
-          'style-loader',
-          'css-loader',
-          'postcss-loader',
-        ],
-      },
     ],
   },
   output: {

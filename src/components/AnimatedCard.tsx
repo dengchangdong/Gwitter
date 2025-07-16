@@ -28,10 +28,11 @@ const AnimatedCard = ({ children, id }: AnimatedCardProps) => {
       transition={{
         duration: 0.4,
         ease: 'easeOut',
+        layout: true,
       }}
-      className="overflow-hidden"
       style={{
         transformOrigin: 'top',
+        overflow: 'hidden',
       }}
       layout
     >

@@ -1,4 +1,33 @@
+import styled from '@emotion/styled';
 import { useTranslation } from 'react-i18next';
+
+const SwitcherContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+`;
+
+const LanguageButton = styled.button<{ isActive: boolean }>`
+  background: ${(props) => (props.isActive ? '#1da1f2' : 'transparent')};
+  color: ${(props) => (props.isActive ? 'white' : '#657786')};
+  border: 1px solid ${(props) => (props.isActive ? '#1da1f2' : '#e1e8ed')};
+  padding: 4px 8px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  transition: all 0.2s;
+  min-width: 32px;
+
+  &:hover {
+    background: ${(props) => (props.isActive ? '#1991db' : '#f7f9fa')};
+    border-color: ${(props) => (props.isActive ? '#1991db' : '#d1d9e0')};
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+`;
 
 const LanguageSwitcher = () => {
   const { i18n } = useTranslation();
@@ -7,32 +36,21 @@ const LanguageSwitcher = () => {
     i18n.changeLanguage(lng);
   };
 
-  const isZhActive = i18n.language === 'zh' || i18n.language === 'zh-CN';
-  const isEnActive = i18n.language === 'en';
-
   return (
-    <div className="flex items-center gap-2">
-      <button
-        className={`min-w-8 rounded-xl border px-2 py-1 text-xs font-medium transition-all duration-200 active:scale-95 
-        ${isZhActive 
-          ? 'border-blue-500 bg-blue-500 text-white hover:border-blue-600 hover:bg-blue-600' 
-          : 'border-gray-200 bg-transparent text-gray-500 hover:border-gray-300 hover:bg-gray-50'
-        }`}
+    <SwitcherContainer>
+      <LanguageButton
+        isActive={i18n.language === 'zh' || i18n.language === 'zh-CN'}
         onClick={() => changeLanguage('zh')}
       >
         中
-      </button>
-      <button
-        className={`min-w-8 rounded-xl border px-2 py-1 text-xs font-medium transition-all duration-200 active:scale-95
-        ${isEnActive 
-          ? 'border-blue-500 bg-blue-500 text-white hover:border-blue-600 hover:bg-blue-600' 
-          : 'border-gray-200 bg-transparent text-gray-500 hover:border-gray-300 hover:bg-gray-50'
-        }`}
+      </LanguageButton>
+      <LanguageButton
+        isActive={i18n.language === 'en'}
         onClick={() => changeLanguage('en')}
       >
         EN
-      </button>
-    </div>
+      </LanguageButton>
+    </SwitcherContainer>
   );
 };
 

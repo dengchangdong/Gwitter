@@ -1,7 +1,143 @@
+import { keyframes } from '@emotion/react';
+import styled from '@emotion/styled';
 import { useTranslation } from 'react-i18next';
 import config from '../config';
 import { useAuth } from '../hooks/useAuth';
 import LanguageSwitcher from './LanguageSwitcher';
+
+const slideInTop = keyframes`
+  0% {
+    transform: translateY(-30px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+`;
+
+const ToolbarContainer = styled.div`
+  position: relative;
+  width: 100%;
+  padding: 0.8em 0.4em;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  animation: ${slideInTop} 0.3s ease both;
+
+  @media (max-width: 768px) {
+    flex-direction: row;
+    gap: 6px;
+    padding: 0.5em 0.2em;
+  }
+`;
+
+const LoginInfo = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 8px;
+
+  @media (max-width: 768px) {
+    gap: 4px;
+    margin-left: 4px;
+  }
+`;
+
+const AvatarContainer = styled.div`
+  position: relative;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+
+  @media (max-width: 768px) {
+    width: 26px;
+    height: 26px;
+  }
+`;
+
+const Avatar = styled.img`
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  transition: all 0.2s ease;
+
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 2px rgba(29, 155, 240, 0.3);
+  }
+`;
+
+const LoadingSpinner = styled.div`
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid rgba(29, 155, 240, 0.2);
+  border-top-color: #1d9bf0;
+  animation: spin 0.8s linear infinite;
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @media (max-width: 768px) {
+    width: 20px;
+    height: 20px;
+  }
+`;
+
+const RightSection = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+`;
+
+const AuthButton = styled.button<{ $isLoading?: boolean }>`
+  background: none;
+  border: none;
+  color: #1d9bf0;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: 18px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  opacity: ${props => props.$isLoading ? 0.6 : 1};
+
+  &:hover {
+    background-color: rgba(29, 155, 240, 0.1);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  @media (max-width: 768px) {
+    font-size: 13px;
+    padding: 4px 8px;
+  }
+`;
+
+const Logo = styled.div`
+  color: #1d9bf0;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: default;
+  user-select: none;
+  letter-spacing: -0.5px;
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
+`;
 
 interface ToolbarProps {
   onRepoChange: (owner: string, repo: string) => void;
@@ -19,44 +155,31 @@ const Toolbar = ({
     useAuth();
 
   return (
-    <div className="relative flex w-full flex-row items-center justify-between gap-2.5 animate-fadeInDown p-3 sm:p-2 sm:gap-1.5">
-      <div className="text-blue-500 text-xl font-bold cursor-default select-none -tracking-tight sm:text-base">
-        {config.app.siteName}
-      </div>
+    <ToolbarContainer>
+      <Logo>{config.app.siteName}</Logo>
 
-      <div className="flex items-center gap-2">
+      <RightSection>
         <LanguageSwitcher />
         {isLoading ? (
-          <div className="h-6 w-6 rounded-full border-2 border-blue-200 border-t-blue-500 animate-spin sm:h-5 sm:w-5"></div>
+          <LoadingSpinner />
         ) : isAuthenticated && user ? (
-          <div className="ml-2 flex items-center gap-2 sm:gap-1 sm:ml-1">
-            <div className="relative h-[30px] w-[30px] cursor-pointer sm:h-[26px] sm:w-[26px]">
-              <img 
-                src={user.avatarUrl} 
-                alt={user.login} 
-                className="h-full w-full rounded-full object-cover transition-all duration-200 hover:scale-105 hover:shadow-[0_0_0_2px_rgba(29,155,240,0.3)]"
-              />
-            </div>
-            <button 
-              onClick={logout}
-              className="flex items-center gap-1.5 rounded-full bg-transparent px-3 py-1.5 text-sm text-blue-500 transition-all duration-200 hover:bg-blue-50/50 active:scale-[0.98] sm:text-xs sm:px-2 sm:py-1"
-            >
-              {t('auth.logout')}
-            </button>
-          </div>
+          <LoginInfo>
+            <AvatarContainer>
+              <Avatar src={user.avatarUrl} alt={user.login} />
+            </AvatarContainer>
+            <AuthButton onClick={logout}>{t('auth.logout')}</AuthButton>
+          </LoginInfo>
         ) : (
-          <button
+          <AuthButton
             onClick={login}
             disabled={authLoading}
-            className={`flex items-center gap-1.5 rounded-full bg-transparent px-3 py-1.5 text-sm text-blue-500 transition-all duration-200 hover:bg-blue-50/50 active:scale-[0.98] sm:text-xs sm:px-2 sm:py-1 ${
-              authLoading ? 'opacity-60' : 'opacity-100'
-            }`}
+            $isLoading={authLoading}
           >
             {authLoading ? t('auth.loading') : t('auth.login')}
-          </button>
+          </AuthButton>
         )}
-      </div>
-    </div>
+      </RightSection>
+    </ToolbarContainer>
   );
 };
 

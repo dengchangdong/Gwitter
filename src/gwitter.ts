@@ -4,7 +4,6 @@ import App from './App';
 import AuthWindow from './AuthWindow';
 import { setConfig } from './config';
 import './i18n';
-import './tailwind.css';  // 导入 Tailwind CSS
 import type { GwitterOptions } from './types/global';
 import { parseUrl } from './utils';
 
