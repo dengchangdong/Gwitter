@@ -202,12 +202,7 @@ const App = () => {
     }
   }, [currentRepo.owner, currentRepo.repo]);
 
-  const handleRepoChange = useCallback((owner: string, repo: string) => {
-    console.log('Repo changed to:', { owner, repo });
-    setCurrentRepo({ owner, repo });
-    saveLastRepo(owner, repo);
-    updateUrlParams(owner, repo);
-  }, []);
+
 
   const handleScroll = useCallback(() => {
     if (scrollTimeoutRef.current) {
@@ -361,8 +356,6 @@ const App = () => {
   return (
     <Container>
       <Toolbar
-        onRepoChange={handleRepoChange}
-        currentRepo={currentRepo}
         isLoading={isRepoLoading}
         error={repoError}
       />
