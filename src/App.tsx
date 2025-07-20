@@ -18,7 +18,7 @@ import {
 import { loadLastRepo, saveLastRepo } from './utils/cache';
 import { api, getIssuesQL } from './utils/request';
 
-const Container = styled.div`
+const Container = styled('div')`
   box-sizing: border-box;
   * {
     box-sizing: border-box;
