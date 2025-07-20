@@ -1,90 +1,9 @@
-import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
-import NumberFlow from '@number-flow/react';
-import { forwardRef, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useAuth } from '../hooks/useAuth';
+import { forwardRef } from 'react';
 
-const COLORS = {
-  primary: '#536471'
-} as const;
 
-const heartPop = keyframes`
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.4);
-  }
-  100% {
-    transform: scale(1);
-  }
-`;
 
-const particleFlyOut = keyframes`
-  0% {
-    transform: translate(0, 0) scale(1);
-    opacity: 1;
-  }
-  100% {
-    transform: translate(var(--particle-x), var(--particle-y)) scale(0) rotate(var(--particle-rotation));
-    opacity: 0;
-  }
-`;
 
-const Particle = styled.div<{
-  delay: string;
-  duration: string;
-  x: string;
-  y: string;
-  color: string;
-  size: string;
-  initialScale: number;
-  initialRotation: string;
-  shape: 'circle' | 'heart';
-}>`
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: ${(props) => props.size};
-  height: ${(props) => props.size};
-  background-color: ${(props) =>
-    props.shape === 'circle' ? props.color : 'transparent'};
-  border-radius: ${(props) => (props.shape === 'circle' ? '50%' : '0')};
-  pointer-events: none;
-  opacity: 0;
-  transform-origin: center;
-  transform: translate(-50%, -50%) scale(${(props) => props.initialScale})
-    rotate(${(props) => props.initialRotation});
-  animation: ${particleFlyOut} ${(props) => props.duration} ease-out forwards;
-  animation-delay: ${(props) => props.delay};
-  --particle-x: ${(props) => props.x};
-  --particle-y: ${(props) => props.y};
-  --particle-rotation: ${(props) => Math.random() * 180 - 90}deg;
-
-  ${(props) =>
-    props.shape === 'heart' &&
-    `
-    &::before,
-    &::after {
-      content: '';
-      position: absolute;
-      left: calc(${props.size} / 2);
-      top: 0;
-      width: calc(${props.size} / 2);
-      height: ${props.size};
-      background: ${props.color};
-      border-radius: calc(${props.size} / 2) calc(${props.size} / 2) 0 0;
-      transform: rotate(-45deg);
-      transform-origin: 0 100%;
-    }
-    &::after {
-      left: 0;
-      transform: rotate(45deg);
-      transform-origin: 100% 100%;
-    }
-  `}
-`;
 
 interface InteractionProps {
   id: number;
@@ -96,108 +15,9 @@ interface InteractionProps {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  /* margin-top: 10px; */
 `;
 
-const ButtonsContainer = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 0;
-  margin-left: -8px;
-`;
 
-const NumberContainer = styled.span<{ $isVisible: boolean }>`
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 20px;
-  overflow: hidden;
-  transition:
-    color 0.2s,
-    opacity 0.2s,
-    transform 0.2s;
-  opacity: ${(props) => (props.$isVisible ? 1 : 0)};
-  transform: ${(props) => (props.$isVisible ? 'scale(1)' : 'scale(0.8)')};
-  pointer-events: ${(props) => (props.$isVisible ? 'auto' : 'none')};
-`;
-
-const InteractionButton = styled.button`
-  display: flex;
-  align-items: center;
-  color: ${COLORS.primary};
-  background: none;
-  border: none;
-  padding: 8px 0px;
-  cursor: pointer;
-  transition: all 0.2s;
-  font-size: 13px;
-  font-weight: 400;
-  border-radius: 20px;
-  min-width: 0;
-  position: relative;
-  width: 50px;
-
-  span {
-    font-size: 13px;
-    transition: color 0.2s;
-    min-width: 0;
-    position: relative;
-    z-index: 1;
-    background-color: rgba(0, 0, 0, 0);
-    border: 0 solid black;
-    box-sizing: border-box;
-    display: inline;
-    font: inherit;
-    list-style: none;
-    margin: 0px;
-    padding: 0px;
-    position: relative;
-    text-align: inherit;
-    text-decoration: none;
-    white-space: inherit;
-    word-wrap: break-word;
-  }
-
-  &.liked {
-    .icon-container svg {
-      color: ${COLORS.like};
-      fill: ${COLORS.like};
-    }
-
-    .number-container {
-      color: ${COLORS.like};
-    }
-
-    .icon-container:hover {
-      svg {
-        color: ${COLORS.like};
-        fill: ${COLORS.like};
-      }
-
-      &::before {
-        background: ${COLORS.likeHover};
-      }
-    }
-  }
-
-  &:hover.like-button .number-container {
-    color: ${COLORS.like};
-  }
-
-  &:hover.comment-button .number-container {
-    color: ${COLORS.comment};
-  }
-
-  &.comment-active .number-container {
-    color: ${COLORS.comment};
-  }
-`;
-
-const IconContainer = styled.div`
-  position: relative;
-  display: flex;
   align-items: center;
   justify-content: center;
   width: 36px;
@@ -338,110 +158,13 @@ const generateParticleStyle = (): ParticleStyle => {
   };
 };
 
-const Interaction: React.FC<InteractionProps> = ({
+const Interaction = forwardRef<HTMLDivElement, InteractionProps>(({
   id,
   issueId,
-  reactions,
-  comments,
   repoOwner,
   repoName,
-}) => {
-  const { t } = useTranslation();
-  const { isAuthenticated, token, login } = useAuth();
-
-  const [heartCount, setHeartCount] = useState(reactions.heartCount);
-  const [liked, setLiked] = useState(reactions.userReacted);
-  const [commentCount, setCommentCount] = useState(comments.totalCount);
-  const [showComments, setShowComments] = useState(false);
-  const [isToggling, setIsToggling] = useState(false);
-  const [animateLike, setAnimateLike] = useState(false);
-  const [particles, setParticles] = useState<
-    Array<{ id: number; style: ParticleStyle }>
-  >([]);
-
-  const toggleLike = async () => {
-    const wasLiked = liked;
-    const previousCount = heartCount;
-
-    try {
-      console.log('Toggle like for issue:', id, liked, token);
-
-      const authenticatedApi = createAuthenticatedApi(token!);
-
-      if (!liked) {
-        setLiked(true);
-        setHeartCount(previousCount + 1);
-
-        setAnimateLike(true);
-        const newParticles = Array.from({
-          length: Math.floor(Math.random() * 6) + 10,
-        }).map((_, i) => ({
-          id: Date.now() + i,
-          style: generateParticleStyle(),
-        }));
-        setParticles(newParticles);
-
-        await addReactionToIssue(authenticatedApi, issueId, 'HEART');
-      } else {
-        setLiked(false);
-        setHeartCount(previousCount - 1);
-        await removeReactionFromIssue(authenticatedApi, issueId, 'HEART');
-      }
-    } catch (error) {
-      console.error('Failed to toggle like:', error);
-      setLiked(wasLiked);
-      setHeartCount(previousCount);
-    }
-  };
-
-  const handleLike = () => {
-    if (!isAuthenticated) {
-      login();
-      return;
-    }
-
-    if (isToggling) {
-      return;
-    }
-
-    setIsToggling(true);
-    toggleLike();
-    setIsToggling(false);
-  };
-
-  const handleComment = () => {
-    if (!isAuthenticated) {
-      login();
-      return;
-    }
-    setShowComments(!showComments);
-  };
-
-  useEffect(() => {
-    setLiked(reactions.userReacted);
-    setHeartCount(reactions.heartCount);
-  }, [reactions.userReacted, reactions.heartCount]);
-
-  useEffect(() => {
-    setCommentCount(comments.totalCount);
-  }, [comments.totalCount]);
-
-  useEffect(() => {
-    if (animateLike) {
-      const timer = setTimeout(() => {
-        setAnimateLike(false);
-      }, 300);
-      const particleTimer = setTimeout(() => {
-        setParticles([]);
-      }, 1200);
-      return () => {
-        clearTimeout(timer);
-        clearTimeout(particleTimer);
-      };
-    }
-  }, [animateLike]);
-
-  return <Container />;
+}, ref) => {
+  return <Container ref={ref} />;
 };
 
 export default Interaction;

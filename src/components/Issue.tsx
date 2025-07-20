@@ -177,10 +177,6 @@ const Issue = ({
         <Interaction
           id={issue.number}
           issueId={issue.id}
-          reactions={issue.reactions}
-          comments={{
-            totalCount: issue.comments,
-          }}
           repoOwner={repoOwner}
           repoName={repoName}
         />

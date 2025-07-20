@@ -71,12 +71,7 @@ export interface Label {
   color: string;
 }
 
-export interface Reaction {
-  content: string;
-  user: {
-    login: string;
-  };
-}
+
 
 export interface RawIssue {
   id: string;
@@ -89,13 +84,6 @@ export interface RawIssue {
     login: string;
     avatarUrl: string;
     url: string;
-  };
-  reactions: {
-    totalCount: number;
-    nodes: Reaction[];
-  };
-  comments: {
-    totalCount: number;
   };
   labels: {
     nodes: Label[];
@@ -114,12 +102,6 @@ export interface ProcessedIssue {
     avatarUrl: string;
     url: string;
   };
-  reactions: {
-    totalCount: number;
-    userReacted: boolean;
-    heartCount: number;
-  };
-  comments: number;
   label: Label;
 }
 
@@ -150,13 +132,7 @@ export const transformIssues = (
       comments,
       labels,
     }) => {
-      const heartReactions = reactions.nodes.filter(
-        (reaction) => reaction.content === 'HEART',
-      );
-      const heartCount = heartReactions.length;
-      const userReacted = currentUser
-        ? heartReactions.some((reaction) => reaction.user.login === currentUser)
-        : false;
+      
 
       return {
         id,
@@ -166,12 +142,6 @@ export const transformIssues = (
         title,
         url,
         author,
-        reactions: {
-          totalCount: reactions.totalCount,
-          userReacted,
-          heartCount,
-        },
-        comments: comments.totalCount,
         label: transformLabel(labels.nodes),
       };
     },
