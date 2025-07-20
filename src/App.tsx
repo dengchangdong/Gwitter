@@ -68,18 +68,6 @@ const App = () => {
   const [rawIssuesData, setRawIssuesData] = useState<any[]>([]);
   const [isInitialized, setIsInitialized] = useState(false);
   const [currentRepo, setCurrentRepo] = useState(() => {
-    if (config.app.enableRepoSwitcher) {
-      const urlRepo = getRepoFromUrl();
-      if (urlRepo) {
-        return urlRepo;
-      }
-
-      const lastRepo = loadLastRepo();
-      if (lastRepo) {
-        return lastRepo;
-      }
-    }
-
     if (config.request.owner && config.request.repo) {
       return { owner: config.request.owner, repo: config.request.repo };
     }
@@ -222,10 +210,7 @@ const App = () => {
   const handleRepoChange = useCallback((owner: string, repo: string) => {
     console.log('Repo changed to:', { owner, repo });
     setCurrentRepo({ owner, repo });
-    if (config.app.enableRepoSwitcher) {
-      saveLastRepo(owner, repo);
-      updateUrlParams(owner, repo);
-    }
+    
   }, []);
 
   const handleScroll = useCallback(() => {
@@ -318,13 +303,7 @@ const App = () => {
       resetAndLoadNewRepo();
       setIsInitialized(true);
 
-      if (
-        currentRepo.owner &&
-        currentRepo.repo &&
-        config.app.enableRepoSwitcher
-      ) {
-        updateUrlParams(currentRepo.owner, currentRepo.repo);
-      }
+      
     }
   }, [isInitialized, resetAndLoadNewRepo, currentRepo]);
 
