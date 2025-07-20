@@ -384,12 +384,7 @@ const App = () => {
 
   return (
     <Container>
-      <Toolbar
-        onRepoChange={handleRepoChange}
-        currentRepo={currentRepo}
-        isLoading={isRepoLoading}
-        error={repoError}
-      />
+      <Toolbar />
       {issues.length > 0 && (
         <>
           <IssuesContainer>
