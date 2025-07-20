@@ -26,9 +26,6 @@
   },
   "private": false,
   "type": "module",
-  "engines": {
-    "node": "18.x"
-  },
   "scripts": {
     "build": "rsbuild build",
     "build:lib": "rollup -c rollup.config.js",

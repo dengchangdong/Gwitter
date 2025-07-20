@@ -13,7 +13,6 @@ const NODE_ENV = process.env.NODE_ENV || 'production';
 const commonPlugins = [
   replace({
     'process.env.NODE_ENV': JSON.stringify(NODE_ENV),
-    'use client': '',
     preventAssignment: true,
   }),
   resolve({
