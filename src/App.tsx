@@ -78,7 +78,7 @@ const App = () => {
         return lastRepo;
       }
     }
-
+    
     if (config.request.owner && config.request.repo) {
       return { owner: config.request.owner, repo: config.request.repo };
     }
