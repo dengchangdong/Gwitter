@@ -295,7 +295,7 @@ const App = () => {
       setIsInitialized(true);
 
       if (currentRepo.owner && currentRepo.repo) {
-        updateUrlParams(currentRepo.owner, currentRepo.repo);
+      
       }
     }
   }, [isInitialized, resetAndLoadNewRepo, currentRepo]);
