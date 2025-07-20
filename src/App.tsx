@@ -8,7 +8,7 @@ import SkeletonCard from './components/SkeletonCard';
 import Toolbar from './components/Toolbar';
 import config from './config';
 
-import { useAuth } from './hooks/useAuth';
+
 import {
   getRepoFromUrl,
   ProcessedIssue,
@@ -61,7 +61,7 @@ const ErrorSubText = styled.span`
 `;
 
 const App = () => {
-  const user = { login: '', avatarUrl: '' };
+
   const [issues, setIssues] = useState<ProcessedIssue[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isRepoLoading, setIsRepoLoading] = useState(true);
