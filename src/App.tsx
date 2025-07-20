@@ -73,10 +73,9 @@ const App = () => {
       return urlRepo;
     }
 
-      const lastRepo = loadLastRepo();
-      if (lastRepo) {
-        return lastRepo;
-      }
+    const lastRepo = loadLastRepo();
+    if (lastRepo) {
+      return lastRepo;
     }
     
     if (config.request.owner && config.request.repo) {
