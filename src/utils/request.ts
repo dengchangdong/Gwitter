@@ -85,10 +85,6 @@ export const getLabelsQL = ({ owner, repo }: GetLabelsParams) => ({
   `,
 });
 
-
-        
-
-
 export const getUserInfo = async (token: string) => {
   const response = await axios.get('https://api.github.com/user', {
     headers: {
