@@ -70,8 +70,7 @@ const App = () => {
   const [rawIssuesData, setRawIssuesData] = useState<any[]>([]);
   const [isInitialized, setIsInitialized] = useState(false);
   const [currentRepo, setCurrentRepo] = useState(() => {
-    if (config.app.enableRepoSwitcher) {
-      const urlRepo = getRepoFromUrl();
+    const urlRepo = getRepoFromUrl();
       if (urlRepo) {
         return urlRepo;
       }
@@ -80,7 +79,6 @@ const App = () => {
       if (lastRepo) {
         return lastRepo;
       }
-    }
 
     if (config.request.owner && config.request.repo) {
       return { owner: config.request.owner, repo: config.request.repo };
@@ -224,10 +222,8 @@ const App = () => {
   const handleRepoChange = useCallback((owner: string, repo: string) => {
     console.log('Repo changed to:', { owner, repo });
     setCurrentRepo({ owner, repo });
-    if (config.app.enableRepoSwitcher) {
-      saveLastRepo(owner, repo);
+    saveLastRepo(owner, repo);
       updateUrlParams(owner, repo);
-    }
   }, []);
 
   const handleScroll = useCallback(() => {
@@ -322,8 +318,7 @@ const App = () => {
 
       if (
         currentRepo.owner &&
-        currentRepo.repo &&
-        config.app.enableRepoSwitcher
+        currentRepo.repo
       ) {
         updateUrlParams(currentRepo.owner, currentRepo.repo);
       }
@@ -391,9 +386,7 @@ const App = () => {
         isLoading={isRepoLoading}
         error={repoError}
       />
-      {config.app.enableAbout && (
-        <About owner={currentRepo.owner} repo={currentRepo.repo} />
-      )}
+      
       {issues.length > 0 && (
         <>
           <IssuesContainer>
@@ -440,7 +433,7 @@ const App = () => {
           </ErrorContainer>
         </IssuesContainer>
       )}
-      {config.app.enableEgg && !hasNextPage && !repoError && <Egg />}
+      
     </Container>
   );
 };

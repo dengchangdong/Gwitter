@@ -21,13 +21,11 @@ const ToolbarContainer = styled.div`
   margin: 6px;
   margin-bottom: 1em;
 
-  ${config.app.enableRepoSwitcher && `
-    @media (max-width: 600px) {
+  @media (max-width: 600px) {
       flex-direction: column;
       gap: 8px;
       align-items: stretch;
     }
-  `}
 `;
 
 const LeftSection = styled.div`
@@ -286,19 +284,15 @@ const Toolbar = ({
     <ToolbarContainer>
       <LeftSection>
         <LanguageSwitcher />
-        {config.app.enableRepoSwitcher && (
-          <RepoInputContainer>
+        <RepoInputContainer>
             <RepoLabel>{t('toolbar.repo')}</RepoLabel>
             <RepoInput
               value={repoInput}
               onChange={handleInputChange}
               onKeyPress={handleKeyPress}
               placeholder={t('toolbar.repoPlaceholder')}
-              disabled={!config.app.enableRepoSwitcher}
               style={{
                 borderColor: error || validationError ? '#ff6b6b' : '#e1e8ed',
-                opacity: !config.app.enableRepoSwitcher ? 0.6 : 1,
-                cursor: !config.app.enableRepoSwitcher ? 'not-allowed' : 'text',
               }}
             />
             <ApplyButton
@@ -313,7 +307,6 @@ const Toolbar = ({
               )}
             </ApplyButton>
           </RepoInputContainer>
-        )}
       </LeftSection>
       <RightSection>{renderAuthSection()}</RightSection>
     </ToolbarContainer>

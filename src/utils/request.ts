@@ -24,7 +24,7 @@ export const getIssuesQL = (vars: GetIssuesQLParams) => {
   const ql = `
   query getIssues($owner: String!, $repo: String!, $cursor: String, $pageSize: Int!) {
     repository(owner: $owner, name: $repo) {
-      issues(first: $pageSize, after: $cursor, orderBy: {field: CREATED_AT, direction: DESC}, filterBy: {${config.app.onlyShowOwner ? 'createdBy: $owner,' : ''} states: OPEN}) {
+      issues(first: $pageSize, after: $cursor, orderBy: {field: CREATED_AT, direction: DESC}, filterBy: {states: OPEN}) {
         pageInfo {
           hasNextPage
           endCursor

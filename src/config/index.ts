@@ -13,10 +13,7 @@ let config = {
   },
 
   app: {
-    onlyShowOwner: true,
-    enableRepoSwitcher: false,
-    enableAbout: false,
-    enableEgg: false,
+    
   },
 };
 
