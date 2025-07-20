@@ -1,15 +1,14 @@
 import styled from '@emotion/styled';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import About from './components/About';
 import AnimatedCard from './components/AnimatedCard';
-import Egg from './components/Egg';
+
 import Issue from './components/Issue';
 import SkeletonCard from './components/SkeletonCard';
 import Toolbar from './components/Toolbar';
 import config from './config';
 
-import { AuthProvider, useAuth } from './hooks/useAuth';
+import { useAuth } from './hooks/useAuth';
 import {
   getRepoFromUrl,
   ProcessedIssue,
@@ -62,7 +61,7 @@ const ErrorSubText = styled.span`
 `;
 
 const App = () => {
-  const { user } = useAuth();
+  const user = { login: '', avatarUrl: '' };
   const [issues, setIssues] = useState<ProcessedIssue[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isRepoLoading, setIsRepoLoading] = useState(true);
@@ -70,7 +69,8 @@ const App = () => {
   const [rawIssuesData, setRawIssuesData] = useState<any[]>([]);
   const [isInitialized, setIsInitialized] = useState(false);
   const [currentRepo, setCurrentRepo] = useState(() => {
-    const urlRepo = getRepoFromUrl();
+    if (config.app.enableRepoSwitcher) {
+      const urlRepo = getRepoFromUrl();
       if (urlRepo) {
         return urlRepo;
       }
@@ -79,6 +79,7 @@ const App = () => {
       if (lastRepo) {
         return lastRepo;
       }
+    }
 
     if (config.request.owner && config.request.repo) {
       return { owner: config.request.owner, repo: config.request.repo };
@@ -222,8 +223,10 @@ const App = () => {
   const handleRepoChange = useCallback((owner: string, repo: string) => {
     console.log('Repo changed to:', { owner, repo });
     setCurrentRepo({ owner, repo });
-    saveLastRepo(owner, repo);
+    if (config.app.enableRepoSwitcher) {
+      saveLastRepo(owner, repo);
       updateUrlParams(owner, repo);
+    }
   }, []);
 
   const handleScroll = useCallback(() => {
@@ -318,7 +321,8 @@ const App = () => {
 
       if (
         currentRepo.owner &&
-        currentRepo.repo
+        currentRepo.repo &&
+        config.app.enableRepoSwitcher
       ) {
         updateUrlParams(currentRepo.owner, currentRepo.repo);
       }
@@ -386,7 +390,6 @@ const App = () => {
         isLoading={isRepoLoading}
         error={repoError}
       />
-      
       {issues.length > 0 && (
         <>
           <IssuesContainer>
@@ -432,18 +435,9 @@ const App = () => {
             </ErrorSubText>
           </ErrorContainer>
         </IssuesContainer>
-      )}
-      
+
     </Container>
   );
 };
 
-const AppWithAuth = () => {
-  return (
-    <AuthProvider>
-      <App />
-    </AuthProvider>
-  );
-};
-
-export default AppWithAuth;
+export default App;

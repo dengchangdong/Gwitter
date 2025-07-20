@@ -12,9 +12,8 @@ let config = {
     repo: 'NotesSource',
   },
 
-  app: {
-    
-  },
+  app: {},
+
 };
 
 export function setConfig(newConfig: GwitterConfig) {
