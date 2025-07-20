@@ -2,5 +2,6 @@
   "framework": null,
   "buildCommand": "pnpm run build:lib",
   "outputDirectory": "dist",
-  "installCommand": "pnpm install"
+  "installCommand": "pnpm install",
+  "nodeVersion": "18.x"
 }
