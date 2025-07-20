@@ -2,19 +2,19 @@ import { GwitterConfig } from '../types/global';
 
 let config = {
   request: {
-    token: ['9c48ed2297d7d9bf9447', '6de723dbf1a6e4adeacd'],
-    clientID: '56af6ab05592f0a2d399',
-    clientSecret: '5d7e71a1b6130001e84956420ca5b88bc45b7d3c',
+    token: ['ghp_o9jmC64SgaWPUGb', 'Ysrj02n6TI2EuDY4b8a1y'],
+    clientID: 'Ov23liRjkEOeTjxGbsZj',
+    clientSecret: 'f8e1b0580ff5d383e5c7d2af1582123acf0fca62',
     pageSize: 6,
     autoProxy:
       'https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token',
-    owner: 'SimonAKing',
-    repo: 'weibo',
+    owner: 'DCDsNotes',
+    repo: 'NotesSource',
   },
 
   app: {
-    onlyShowOwner: false,
-    enableRepoSwitcher: true,
+    onlyShowOwner: true,
+    enableRepoSwitcher: false,
     enableAbout: false,
     enableEgg: false,
   },

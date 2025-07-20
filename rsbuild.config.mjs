@@ -61,6 +61,6 @@ export default defineConfig({
     ],
   },
   output: {
-    assetPrefix: isVercel ? '' : 'https://simonaking.com/Gwitter/',
+    assetPrefix: isVercel ? '' : 'https://i.dengchangdong.com',
   },
 });
