@@ -1,10 +1,6 @@
 import styled from '@emotion/styled';
 import 'github-markdown-css/github-markdown-light.css';
 import { useTranslation } from 'react-i18next';
-import config from '../config';
-import { useAuth } from '../hooks/useAuth';
-import { deleteIssue, updateIssue } from '../utils/request';
-import { useState } from 'react';
 import { formatDate, ProcessedIssue, processLinksInHTML } from '../utils';
 import Interaction from './Interaction';
 import Label from './Label';
@@ -126,38 +122,9 @@ const Issue = ({
   repoOwner?: string;
   repoName?: string;
 }) => {
-  const [isEditing, setIsEditing] = useState(false);
-  const [editedTitle, setEditedTitle] = useState(issue.title);
-  const [editedBody, setEditedBody] = useState(issue.body);
-  const { user } = useAuth();
-   const isRepoOwner = user?.login === config.request.owner;
   const { i18n } = useTranslation();
   const windowOpen = (url: string) => {
     window.open(url, '_blank');
-  };
-
-  const handleDelete = async () => {
-    if (window.confirm('确定要删除这个issue吗？')) {
-      try {
-        await deleteIssue(issue.number);
-        window.location.reload();
-      } catch (error) {
-        console.error('删除失败:', error);
-      }
-    }
-  };
-
-  const handleUpdate = async () => {
-    try {
-      await updateIssue(issue.number, {
-        title: editedTitle,
-        body: editedBody
-      });
-      setIsEditing(false);
-      window.location.reload();
-    } catch (error) {
-      console.error('更新失败:', error);
-    }
   };
 
   return (
@@ -165,21 +132,6 @@ const Issue = ({
       <Spotlight />
       <IssueContent>
         <IssueHeader>
-          {isRepoOwner && (
-            <div style={{ display: 'flex', gap: '8px', marginLeft: 'auto' }}>
-              {isEditing ? (
-                <>
-                  <button onClick={handleUpdate}>保存</button>
-                  <button onClick={() => setIsEditing(false)}>取消</button>
-                </>
-              ) : (
-                <>
-                  <button onClick={() => setIsEditing(true)}>编辑</button>
-                  <button onClick={handleDelete}>删除</button>
-                </>
-              )}
-            </div>
-          )}
           <UserAvatar
             src={issue.author.avatarUrl}
             onClick={() => windowOpen(issue.author.url)}

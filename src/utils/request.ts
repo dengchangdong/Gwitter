@@ -94,19 +94,6 @@ export const getUserInfo = async (token: string) => {
   return response.data;
 };
 
-export const updateIssue = async (issueNumber: number, { title, body }: { title: string; body: string }) => {
-  return api.patch(`/repos/${config.request.owner}/${config.request.repo}/issues/${issueNumber}`, {
-    title,
-    body
-  });
-};
-
-export const deleteIssue = async (issueNumber: number) => {
-  return api.patch(`/repos/${config.request.owner}/${config.request.repo}/issues/${issueNumber}`, {
-    state: 'closed'
-  });
-};
-
 export const getAccessToken = async (code: string) => {
   const response = await axios.post(config.request.autoProxy, {
     client_id: config.request.clientID,
