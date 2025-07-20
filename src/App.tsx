@@ -1,15 +1,15 @@
 import styled from '@emotion/styled';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import About from './components/About';
 import AnimatedCard from './components/AnimatedCard';
-import Container from './components/common/Container';
-
+import Egg from './components/Egg';
 import Issue from './components/Issue';
 import SkeletonCard from './components/SkeletonCard';
 import Toolbar from './components/Toolbar';
 import config from './config';
 
-import { useAuth } from './hooks/useAuth';
+import { AuthProvider, useAuth } from './hooks/useAuth';
 import {
   getRepoFromUrl,
   ProcessedIssue,
@@ -19,7 +19,12 @@ import {
 import { loadLastRepo, saveLastRepo } from './utils/cache';
 import { api, getIssuesQL } from './utils/request';
 
-
+const Container = styled.div`
+  box-sizing: border-box;
+  * {
+    box-sizing: border-box;
+  }
+`;
 
 const IssuesContainer = styled.div`
   /* letter-spacing: 1px; */
@@ -57,7 +62,7 @@ const ErrorSubText = styled.span`
 `;
 
 const App = () => {
-  const user = { login: '', avatarUrl: '' };
+  const { user } = useAuth();
   const [issues, setIssues] = useState<ProcessedIssue[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isRepoLoading, setIsRepoLoading] = useState(true);
@@ -380,7 +385,15 @@ const App = () => {
 
   return (
     <Container>
-      <Toolbar />
+      <Toolbar
+        onRepoChange={handleRepoChange}
+        currentRepo={currentRepo}
+        isLoading={isRepoLoading}
+        error={repoError}
+      />
+      {config.app.enableAbout && (
+        <About owner={currentRepo.owner} repo={currentRepo.repo} />
+      )}
       {issues.length > 0 && (
         <>
           <IssuesContainer>
@@ -426,9 +439,18 @@ const App = () => {
             </ErrorSubText>
           </ErrorContainer>
         </IssuesContainer>
-
+      )}
+      {config.app.enableEgg && !hasNextPage && !repoError && <Egg />}
     </Container>
   );
 };
 
-export default App;
+const AppWithAuth = () => {
+  return (
+    <AuthProvider>
+      <App />
+    </AuthProvider>
+  );
+};
+
+export default AppWithAuth;

@@ -8,8 +8,12 @@ export interface GwitterConfig {
     owner?: string;
     repo?: string;
   };
-  app?: {};
-
+  app?: {
+    onlyShowOwner?: boolean;
+    enableRepoSwitcher?: boolean;
+    enableAbout?: boolean;
+    enableEgg?: boolean;
+  };
 }
 
 export interface GwitterOptions {

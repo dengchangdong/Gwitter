@@ -12,8 +12,12 @@ let config = {
     repo: 'NotesSource',
   },
 
-  app: {},
-
+  app: {
+    onlyShowOwner: false,
+    enableRepoSwitcher: true,
+    enableAbout: false,
+    enableEgg: false,
+  },
 };
 
 export function setConfig(newConfig: GwitterConfig) {
