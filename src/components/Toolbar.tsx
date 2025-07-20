@@ -2,7 +2,6 @@ import styled from '@emotion/styled';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import config from '../config';
-import { getRepoFromUrl } from '../utils';
 import { useAuth } from '../hooks/useAuth';
 import LanguageSwitcher from './LanguageSwitcher';
 
@@ -22,7 +21,13 @@ const ToolbarContainer = styled.div`
   margin: 6px;
   margin-bottom: 1em;
 
-
+  ${config.app.enableRepoSwitcher && `
+    @media (max-width: 600px) {
+      flex-direction: column;
+      gap: 8px;
+      align-items: stretch;
+    }
+  `}
 `;
 
 const LeftSection = styled.div`
@@ -200,13 +205,6 @@ const Toolbar = ({
   const [repoInput, setRepoInput] = useState(
     currentRepo ? `${currentRepo.owner}/${currentRepo.repo}` : defaultRepo,
   );
-  const [currentRepo, setCurrentRepo] = useState(() => {
-    if (config.request.owner && config.request.repo) {
-      return { owner: config.request.owner, repo: config.request.repo };
-    }
-
-    return { owner: '', repo: '' };
-  });
   const [validationError, setValidationError] = useState<string>('');
 
   const isValidRepo = (input: string) => {

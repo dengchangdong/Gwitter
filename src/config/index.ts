@@ -13,7 +13,8 @@ let config = {
   },
 
   app: {
-    onlyShowOwner: false
+    onlyShowOwner: false,
+    enableRepoSwitcher: true
   },
 };
 
