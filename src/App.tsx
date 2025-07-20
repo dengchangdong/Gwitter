@@ -2,13 +2,14 @@ import styled from '@emotion/styled';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import AnimatedCard from './components/AnimatedCard';
+import Container from './components/common/Container';
 
 import Issue from './components/Issue';
 import SkeletonCard from './components/SkeletonCard';
 import Toolbar from './components/Toolbar';
 import config from './config';
 
-
+import { useAuth } from './hooks/useAuth';
 import {
   getRepoFromUrl,
   ProcessedIssue,
@@ -18,12 +19,7 @@ import {
 import { loadLastRepo, saveLastRepo } from './utils/cache';
 import { api, getIssuesQL } from './utils/request';
 
-const Container = styled('div')`
-  box-sizing: border-box;
-  * {
-    box-sizing: border-box;
-  }
-`;
+
 
 const IssuesContainer = styled.div`
   /* letter-spacing: 1px; */
@@ -61,7 +57,7 @@ const ErrorSubText = styled.span`
 `;
 
 const App = () => {
-
+  const user = { login: '', avatarUrl: '' };
   const [issues, setIssues] = useState<ProcessedIssue[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isRepoLoading, setIsRepoLoading] = useState(true);
@@ -102,7 +98,9 @@ const App = () => {
     isLoadingRef.current = isLoading;
   }, [isLoading]);
 
-
+  useEffect(() => {
+    currentUserRef.current = user?.login;
+  }, [user?.login]);
 
   useEffect(() => {
     currentRepoRef.current = currentRepo;
@@ -367,9 +365,9 @@ const App = () => {
 
   useEffect(() => {
     if (rawIssuesData.length > 0) {
-      setIssues(transformIssues(rawIssuesData));
+      setIssues(transformIssues(rawIssuesData, user?.login));
     }
-  }, [rawIssuesData]);
+  }, [user?.login, rawIssuesData]);
 
   useEffect(() => {
     return () => {
