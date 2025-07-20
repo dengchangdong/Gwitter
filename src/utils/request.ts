@@ -86,13 +86,7 @@ export const getLabelsQL = ({ owner, repo }: GetLabelsParams) => ({
 });
 
 // Get issue reactions
-interface GetIssueReactionsParams {
-  owner: string;
-  repo: string;
-  issueNumber: number;
-}
 
-        issue(number: ${issueNumber}) {
 export const getUserInfo = async (token: string) => {
   const response = await axios.get('https://api.github.com/user', {
     headers: {
