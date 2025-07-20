@@ -20,6 +20,6 @@ const Interaction = forwardRef<HTMLDivElement, InteractionProps>(({
   repoName,
 }, ref) => {
   return <Container ref={ref} />;
-};
+});
 
 export default Interaction;
