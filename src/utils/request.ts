@@ -41,18 +41,7 @@ export const getIssuesQL = (vars: GetIssuesQLParams) => {
             avatarUrl
             url
           }
-          reactions(first: 100) {
-            totalCount
-            nodes {
-              content
-              user {
-                login
-              }
-            }
-          }
-          comments(first: 1) {
-            totalCount
-          }
+
           labels(first: 1) {
             nodes {
               name
@@ -96,108 +85,7 @@ export const getLabelsQL = ({ owner, repo }: GetLabelsParams) => ({
   `,
 });
 
-// Get issue reactions
-interface GetIssueReactionsParams {
-  owner: string;
-  repo: string;
-  issueNumber: number;
-}
 
-export const getIssueReactionsQL = ({
-  owner,
-  repo,
-  issueNumber,
-}: GetIssueReactionsParams) => ({
-  query: `
-    query {
-      repository(owner: "${owner}", name: "${repo}") {
-        issue(number: ${issueNumber}) {
-          reactions(first: 100) {
-            totalCount
-            nodes {
-              content
-              user {
-                login
-              }
-            }
-          }
-        }
-      }
-    }
-  `,
-});
-
-// Add reaction to issue
-export const addReactionToIssue = async (
-  authenticatedApi: any,
-  subjectId: string,
-  content: string,
-) => {
-  const mutation = `
-    mutation AddReaction($subjectId: ID!, $content: ReactionContent!) {
-      addReaction(input: {subjectId: $subjectId, content: $content}) {
-        reaction {
-          content
-          user {
-            login
-          }
-        }
-      }
-    }
-  `;
-
-  return authenticatedApi.post('/graphql', {
-    query: mutation,
-    variables: {
-      subjectId,
-      content,
-    },
-  });
-};
-
-// Remove reaction from issue
-export const removeReactionFromIssue = async (
-  authenticatedApi: any,
-  subjectId: string,
-  content: string,
-) => {
-  const mutation = `
-    mutation RemoveReaction($subjectId: ID!, $content: ReactionContent!) {
-      removeReaction(input: {subjectId: $subjectId, content: $content}) {
-        reaction {
-          content
-          user {
-            login
-          }
-        }
-      }
-    }
-  `;
-
-  return authenticatedApi.post('/graphql', {
-    query: mutation,
-    variables: {
-      subjectId,
-      content,
-    },
-  });
-};
-
-// Get issue comments
-interface GetIssueCommentsParams {
-  owner: string;
-  repo: string;
-  issueNumber: number;
-}
-
-export const getIssueCommentsQL = ({
-  owner,
-  repo,
-  issueNumber,
-}: GetIssueCommentsParams) => ({
-  query: `
-    query {
-      repository(owner: "${owner}", name: "${repo}") {
         issue(number: ${issueNumber}) {
           comments(first: 100, orderBy: {field: UPDATED_AT, direction: ASC}) {
             totalCount

@@ -4,19 +4,9 @@ import NumberFlow from '@number-flow/react';
 import { forwardRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../hooks/useAuth';
-import {
-  addReactionToIssue,
-  createAuthenticatedApi,
-  removeReactionFromIssue,
-} from '../utils/request';
-import CommentList from './CommentList';
 
 const COLORS = {
-  primary: '#536471',
-  like: '#f91880',
-  comment: '#1d9bf0',
-  likeHover: 'rgba(249, 24, 128, 0.1)',
-  commentHover: 'rgba(29, 161, 242, 0.1)',
+  primary: '#536471'
 } as const;
 
 const heartPop = keyframes`
@@ -99,14 +89,6 @@ const Particle = styled.div<{
 interface InteractionProps {
   id: number;
   issueId: string; // GitHub node ID
-  reactions: {
-    totalCount: number;
-    userReacted: boolean;
-    heartCount: number;
-  };
-  comments: {
-    totalCount: number;
-  };
   repoOwner?: string;
   repoName?: string;
 }
@@ -459,90 +441,7 @@ const Interaction: React.FC<InteractionProps> = ({
     }
   }, [animateLike]);
 
-  return (
-    <Container>
-      <ButtonsContainer>
-        <InteractionButton
-          onClick={handleLike}
-          className={`like-button ${liked ? 'liked' : ''}`}
-          title={
-            isAuthenticated
-              ? liked
-                ? t('interaction.liked')
-                : t('interaction.like')
-              : t('interaction.loginToLike')
-          }
-        >
-          <IconContainer
-            className={`icon-container like-icon ${animateLike ? 'liked-animation' : ''}`}
-          >
-            <HeartIcon filled={liked} />
-            {particles.map((p) => (
-              <Particle
-                key={p.id}
-                x={p.style.x}
-                y={p.style.y}
-                duration={p.style.duration}
-                delay={p.style.delay}
-                color={p.style.color}
-                size={p.style.size}
-                shape={p.style.shape as 'circle' | 'heart'}
-                initialScale={p.style.initialScale}
-                initialRotation={p.style.initialRotation}
-              />
-            ))}
-          </IconContainer>
-          <NumberContainer
-            className="number-container"
-            $isVisible={heartCount > 0}
-          >
-            <NumberFlow
-              transformTiming={{ duration: 150, easing: 'ease-in-out' }}
-              spinTiming={{ duration: 150, easing: 'ease-in-out' }}
-              opacityTiming={{ duration: 150, easing: 'ease-in-out' }}
-              value={heartCount}
-            />
-          </NumberContainer>
-        </InteractionButton>
-        <InteractionButton
-          onClick={handleComment}
-          className={`comment-button ${showComments ? 'comment-active' : ''}`}
-          title={
-            isAuthenticated
-              ? t('interaction.comment')
-              : t('interaction.loginToComment')
-          }
-        >
-          <IconContainer
-            className={`icon-container comment-icon ${showComments ? 'comment-active' : ''}`}
-          >
-            <CommentIcon />
-          </IconContainer>
-          <NumberContainer
-            className="number-container"
-            $isVisible={commentCount > 0}
-          >
-            <NumberFlow
-              transformTiming={{ duration: 150, easing: 'ease-in-out' }}
-              spinTiming={{ duration: 150, easing: 'ease-in-out' }}
-              opacityTiming={{ duration: 150, easing: 'ease-in-out' }}
-              value={commentCount}
-            />
-          </NumberContainer>
-        </InteractionButton>
-      </ButtonsContainer>
-
-      <CommentList
-        issueNumber={id}
-        issueId={issueId}
-        isVisible={showComments}
-        commentCount={commentCount}
-        onCommentCountChange={setCommentCount}
-        repoOwner={repoOwner}
-        repoName={repoName}
-      />
-    </Container>
-  );
+  return <Container />;
 };
 
 export default Interaction;

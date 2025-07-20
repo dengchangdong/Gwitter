@@ -1,9 +1,7 @@
 import styled from '@emotion/styled';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import About from './components/About';
 import AnimatedCard from './components/AnimatedCard';
-import Egg from './components/Egg';
 import Issue from './components/Issue';
 import SkeletonCard from './components/SkeletonCard';
 import Toolbar from './components/Toolbar';
@@ -391,9 +389,7 @@ const App = () => {
         isLoading={isRepoLoading}
         error={repoError}
       />
-      {config.app.enableAbout && (
-        <About owner={currentRepo.owner} repo={currentRepo.repo} />
-      )}
+
       {issues.length > 0 && (
         <>
           <IssuesContainer>
@@ -440,7 +436,7 @@ const App = () => {
           </ErrorContainer>
         </IssuesContainer>
       )}
-      {config.app.enableEgg && !hasNextPage && !repoError && <Egg />}
+
     </Container>
   );
 };

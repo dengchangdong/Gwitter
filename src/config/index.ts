@@ -14,9 +14,7 @@ let config = {
 
   app: {
     onlyShowOwner: false,
-    enableRepoSwitcher: true,
-    enableAbout: false,
-    enableEgg: false,
+    enableRepoSwitcher: true
   },
 };
 
