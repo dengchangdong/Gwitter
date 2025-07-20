@@ -102,9 +102,7 @@ const App = () => {
     isLoadingRef.current = isLoading;
   }, [isLoading]);
 
-  useEffect(() => {
-    currentUserRef.current = user?.login;
-  }, [user?.login]);
+
 
   useEffect(() => {
     currentRepoRef.current = currentRepo;
@@ -369,9 +367,9 @@ const App = () => {
 
   useEffect(() => {
     if (rawIssuesData.length > 0) {
-      setIssues(transformIssues(rawIssuesData, user?.login));
+      setIssues(transformIssues(rawIssuesData));
     }
-  }, [user?.login, rawIssuesData]);
+  }, [rawIssuesData]);
 
   useEffect(() => {
     return () => {
